@@ -2,6 +2,7 @@
 class Author extends AppModel {
 
 	var $name = 'Author';
+        var $displayField = 'last_name';
 	var $validate = array(
 		'first_name' => array('notempty'),
 		'last_name' => array('notempty'),

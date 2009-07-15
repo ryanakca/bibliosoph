@@ -2,6 +2,7 @@
 class Paper extends AppModel {
 
 	var $name = 'Paper';
+        var $displayField = 'tr-id';
 	var $validate = array(
 		'tr-id' => array('notempty'),
 		'title' => array('notempty'),
