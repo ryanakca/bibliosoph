@@ -3,12 +3,10 @@ class Author extends AppModel {
 
 	var $name = 'Author';
 	var $validate = array(
-		'first_name' => array('alphanumeric'),
-		'initial' => array('alphanumeric'),
-		'last_name' => array('alphanumeric'),
+		'first_name' => array('notempty'),
+		'last_name' => array('notempty'),
 		'email' => array('email'),
 		'homepage' => array('url'),
-		'updated_on' => array('time')
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

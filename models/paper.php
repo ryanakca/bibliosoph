@@ -4,9 +4,7 @@ class Paper extends AppModel {
 	var $name = 'Paper';
 	var $validate = array(
 		'tr-id' => array('notempty'),
-		'title' => array('alphanumeric'),
-		'published_on' => array('time'),
-		'update_on' => array('time'),
+		'title' => array('notempty'),
 		'pdf' => array('url'),
 		'ps' => array('url')
 	);

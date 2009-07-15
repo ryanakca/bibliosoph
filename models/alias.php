@@ -4,7 +4,6 @@ class Alias extends AppModel {
 	var $name = 'Alias';
 	var $validate = array(
 		'first_name' => array('alphanumeric'),
-		'initial' => array('alphanumeric'),
 		'last_name' => array('alphanumeric'),
 		'author_id' => array('numeric')
 	);
