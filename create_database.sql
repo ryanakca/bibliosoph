@@ -82,10 +82,9 @@ CREATE TABLE `authors` (
   `last_name` varchar(255) default NULL,
   `email` varchar(255) default NULL,
   `homepage` varchar(255) default NULL,
-  `created_at` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `updated_on` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Author table';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Author table';
 SET character_set_client = @saved_cs_client;
 
 --
@@ -108,9 +107,8 @@ CREATE TABLE `papers` (
   `id` int(11) NOT NULL auto_increment,
   `tr-id` varchar(255) NOT NULL COMMENT 'Tech report ID',
   `title` varchar(500) NOT NULL,
-  `published_at` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL default '0000-00-00 00:00:00',
-  `update_at` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `published_on` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `update_on` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `pdf` varchar(255) default NULL,
   `ps` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
@@ -135,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-07-15 12:45:30
+-- Dump completed on 2009-07-15 13:20:41
