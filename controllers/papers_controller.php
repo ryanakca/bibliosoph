@@ -5,9 +5,21 @@ class PapersController extends AppController {
 	var $helpers = array('Html', 'Form');
 
 	function index() {
-		$this->Paper->recursive = 0;
+		$this->Paper->recursive = 10;
 		$this->set('papers', $this->paginate());
 	}
+
+        function by_year($year = null) {
+            if (!$year) {
+                $this->Session->setFlash(__('No year specified', true));
+                $this->redirect(array('action'=>'index'));
+            }
+            $conditions = array('conditions' => array(
+                'Paper.published_on >' => date('Y-m-d H:i:s', strtotime($year.'-01-01 00:00:00')),
+                'Paper.published_on <' => date('Y-m-d H:i:s', strtotime($year.'-12-31 23:59:59'))
+                ), 'contain' => array('Paper'));
+            $this->set('papers', $this->Paper->find('all', $conditions));
+        }
 
 	function admin_index() {
 		$this->Paper->recursive = 0;
