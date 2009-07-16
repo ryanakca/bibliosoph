@@ -81,6 +81,7 @@ CREATE TABLE `papers` (
   `update_on` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `pdf` varchar(255) default NULL,
   `ps` varchar(255) default NULL,
+  `pages` int(5) UNSIGNED default NULL
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
