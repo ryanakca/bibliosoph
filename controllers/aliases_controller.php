@@ -9,7 +9,7 @@ class AliasesController extends AppController {
 		$this->set('aliases', $this->paginate());
 	}
 
-	function view($id = null) {
+/*	function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Alias.', true));
 			$this->redirect(array('action'=>'index'));
@@ -62,7 +62,7 @@ class AliasesController extends AppController {
 			$this->Session->setFlash(__('Alias deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}
-	}
+        }*/
 
 
 	function admin_index() {
