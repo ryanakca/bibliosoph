@@ -23,24 +23,15 @@ DROP TABLE IF EXISTS `aliases`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `aliases` (
-  `first_name` varchar(255) character set latin1 default NULL,
-  `initial` varchar(15) character set latin1 default NULL,
-  `last_name` varchar(255) character set latin1 default NULL,
+  `first_name` varchar(255) default NULL,
+  `initial` varchar(15) default NULL,
+  `last_name` varchar(255) default NULL,
   `id` int(11) NOT NULL auto_increment,
   `author_id` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `author_id` (`author_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='InnoDB free: 3072 kB; (`author_id`) REFER `cake/authors`(`id';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
-
---
--- Dumping data for table `aliases`
---
-
-LOCK TABLES `aliases` WRITE;
-/*!40000 ALTER TABLE `aliases` DISABLE KEYS */;
-/*!40000 ALTER TABLE `aliases` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `aliases_papers`
@@ -50,23 +41,11 @@ DROP TABLE IF EXISTS `aliases_papers`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `aliases_papers` (
-  `alias_id` int(11) NOT NULL,
-  `paper_id` int(11) NOT NULL,
-  KEY `alias_id` (`alias_id`),
-  KEY `paper_id` (`paper_id`),
-  CONSTRAINT `aliases_papers_ibfk_1` FOREIGN KEY (`alias_id`) REFERENCES `alias` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `aliases_papers_ibfk_2` FOREIGN KEY (`paper_id`) REFERENCES `papers` (`id`) ON DELETE CASCADE
+  `alias_id` int(11) unsigned NOT NULL default '0',
+  `paper_id` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`alias_id`,`paper_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
-
---
--- Dumping data for table `aliases_papers`
---
-
-LOCK TABLES `aliases_papers` WRITE;
-/*!40000 ALTER TABLE `aliases_papers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `aliases_papers` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `authors`
@@ -84,17 +63,8 @@ CREATE TABLE `authors` (
   `homepage` varchar(255) default NULL,
   `updated_on` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Author table';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Author table';
 SET character_set_client = @saved_cs_client;
-
---
--- Dumping data for table `authors`
---
-
-LOCK TABLES `authors` WRITE;
-/*!40000 ALTER TABLE `authors` DISABLE KEYS */;
-/*!40000 ALTER TABLE `authors` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `papers`
@@ -112,17 +82,9 @@ CREATE TABLE `papers` (
   `pdf` varchar(255) default NULL,
   `ps` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
---
--- Dumping data for table `papers`
---
-
-LOCK TABLES `papers` WRITE;
-/*!40000 ALTER TABLE `papers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `papers` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -133,4 +95,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-07-15 13:20:41
+-- Dump completed on 2009-07-16 14:56:51
