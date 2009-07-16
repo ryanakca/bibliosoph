@@ -1,6 +1,5 @@
 <div class="papers index">
 <h2><?php __('Papers');?></h2>
-<p>
 <table cellpadding="0" cellspacing="0">
 <tr>
         <th><?php echo $paginator->sort('Techreport ID', 'tr-id') ?></th>
@@ -48,15 +47,21 @@ foreach ($papers as $paper):
                         <?php echo $paper['Paper']['pages'] ?>
                 </td>
                 <td>
+                        <?php if ($paper['Alias']): ?>
                         <ul>
                         <?php foreach ($paper['Alias'] as $alias): ?>
                         <li> <?php echo $html->link($alias['name'],
                         '/authors/show/'.$alias['id']) ?></li>
                         <?php endforeach; ?>
                         </ul>
+                        <?php endif; ?>
                 </td>
 	</tr>
 <?php endforeach; ?>
 </table>
 </div>
+<div class="paging">
+        <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+ |      <?php echo $paginator->numbers();?>
+        <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
