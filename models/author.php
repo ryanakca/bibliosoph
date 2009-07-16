@@ -15,7 +15,7 @@ class Author extends AppModel {
 		'Alias' => array(
 			'className' => 'Alias',
 			'foreignKey' => 'author_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

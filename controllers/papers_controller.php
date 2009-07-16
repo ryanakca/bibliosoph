@@ -5,7 +5,7 @@ class PapersController extends AppController {
 	var $helpers = array('Html', 'Form');
 
 	function index() {
-		$this->Paper->recursive = 10;
+		$this->Paper->recursive = 1;
 		$this->set('papers', $this->paginate());
 	}
 

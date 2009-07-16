@@ -1,21 +1,14 @@
 <div class="papers index">
 <h2><?php __('Papers');?></h2>
 <p>
-<?php
-echo $paginator->counter(array(
-'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-));
-?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('tr-id');?></th>
-	<th><?php echo $paginator->sort('title');?></th>
-	<th><?php echo $paginator->sort('published_on');?></th>
-	<th><?php echo $paginator->sort('update_on');?></th>
-	<th><?php echo $paginator->sort('pdf');?></th>
-	<th><?php echo $paginator->sort('ps');?></th>
-	<th class="actions"><?php __('Actions');?></th>
+        <th><?php echo $paginator->sort('Techreport ID', 'tr-id') ?></th>
+        <th><?php echo $paginator->sort('Title', 'title') ?></th>
+        <th><?php echo $paginator->sort('Published in', 'published_on') ?></th>
+	<th>PDF</th>
+	<th>PS</th>
+        <th>Authors</th>
 </tr>
 <?php
 $i = 0;
@@ -27,42 +20,39 @@ foreach ($papers as $paper):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $paper['Paper']['id']; ?>
-		</td>
-		<td>
 			<?php echo $paper['Paper']['tr-id']; ?>
 		</td>
 		<td>
 			<?php echo $paper['Paper']['title']; ?>
 		</td>
 		<td>
-			<?php echo $paper['Paper']['published_on']; ?>
+			<?php echo date('F Y',
+                        strtotime($paper['Paper']['published_on'])); ?>
 		</td>
 		<td>
-			<?php echo $paper['Paper']['update_on']; ?>
+                        <?php if (strlen($paper['Paper']['pdf'])) {
+                            echo $html->link('PDF', $paper['Paper']['pdf']);
+                        } else {
+                            echo "No PDF available";
+                        } ?>
 		</td>
-		<td>
-			<?php echo $paper['Paper']['pdf']; ?>
-		</td>
-		<td>
-			<?php echo $paper['Paper']['ps']; ?>
-		</td>
-		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $paper['Paper']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $paper['Paper']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $paper['Paper']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $paper['Paper']['id'])); ?>
-		</td>
+                <td>
+                        <?php if (strlen($paper['Paper']['ps'])) {
+                            echo $html->link('PS', $paper['Paper']['ps']);
+                        } else {
+                            echo "No PS available";
+                        } ?>
+                </td>
+                <td>
+                        <ul>
+                        <?php foreach ($paper['Alias'] as $alias): ?>
+                        <li> <?php echo $html->link($alias['name'],
+                        '/authors/show/'.$alias['id']) ?></li>
+                        <?php endforeach; ?>
+                        </ul>
+                </td>
 	</tr>
 <?php endforeach; ?>
 </table>
 </div>
-<div class="paging">
-	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New Paper', true), array('action'=>'add')); ?></li>
-	</ul>
 </div>

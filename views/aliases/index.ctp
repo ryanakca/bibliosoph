@@ -8,9 +8,7 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('first_name');?></th>
-	<th><?php echo $paginator->sort('initial');?></th>
-	<th><?php echo $paginator->sort('last_name');?></th>
+	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('author_id');?></th>
 	<th class="actions"><?php __('Actions');?></th>
@@ -25,19 +23,13 @@ foreach ($aliases as $alias):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $alias['Alias']['first_name']; ?>
-		</td>
-		<td>
-			<?php echo $alias['Alias']['initial']; ?>
-		</td>
-		<td>
-			<?php echo $alias['Alias']['last_name']; ?>
+			<?php echo $alias['Alias']['name']; ?>
 		</td>
 		<td>
 			<?php echo $alias['Alias']['id']; ?>
 		</td>
 		<td>
-			<?php echo $html->link($alias['Author']['id'], array('controller'=> 'authors', 'action'=>'view', $alias['Author']['id'])); ?>
+			<?php echo $alias['Alias']['author_id']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $alias['Alias']['id'])); ?>
@@ -56,9 +48,5 @@ foreach ($aliases as $alias):
 <div class="actions">
 	<ul>
 		<li><?php echo $html->link(__('New Alias', true), array('action'=>'add')); ?></li>
-		<li><?php echo $html->link(__('List Authors', true), array('controller'=> 'authors', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Author', true), array('controller'=> 'authors', 'action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Papers', true), array('controller'=> 'papers', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Paper', true), array('controller'=> 'papers', 'action'=>'add')); ?> </li>
 	</ul>
 </div>
