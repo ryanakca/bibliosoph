@@ -47,11 +47,6 @@ foreach ($authors as $author):
 		<td>
 			<?php echo $author['Author']['updated_on']; ?>
 		</td>
-		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $author['Author']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $author['Author']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $author['Author']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $author['Author']['id'])); ?>
-		</td>
 	</tr>
 <?php endforeach; ?>
 </table>
@@ -60,11 +55,4 @@ foreach ($authors as $author):
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New Author', true), array('action'=>'add')); ?></li>
-		<li><?php echo $html->link(__('List Aliases', true), array('controller'=> 'aliases', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Alias', true), array('controller'=> 'aliases', 'action'=>'add')); ?> </li>
-	</ul>
 </div>
