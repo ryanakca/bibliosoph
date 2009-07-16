@@ -6,8 +6,10 @@ class Paper extends AppModel {
 	var $validate = array(
 		'tr-id' => array('notempty'),
 		'title' => array('notempty'),
-		'pdf' => array('url'),
-		'ps' => array('url')
+                'pdf' => array('rule' => 'url',
+                               'allowEmpty' => true),
+		'ps' => array('rule' => 'url',
+                              'allowEmpty' => true)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
