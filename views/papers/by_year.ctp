@@ -1,13 +1,15 @@
 <div class="papers index">
+<?php $paginator->options(array('url' => $this->passedArgs)); ?>
 <h2><?php __('Papers');?></h2>
 <p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th>Techreport ID</th>
-	<th>Title</th>
-	<th>Published in</th>
+        <th><?php echo $paginator->sort('Techreport ID', 'tr-id') ?></th>
+        <th><?php echo $paginator->sort('Title', 'title') ?></th>
+        <th><?php echo $paginator->sort('Published in', 'published_on') ?></th>
 	<th>PDF</th>
 	<th>PS</th>
+        <th><?php echo $paginator->sort('Pages', 'pages') ?></th>
         <th>Authors</th>
 </tr>
 <?php
@@ -44,7 +46,15 @@ foreach ($papers as $paper):
                         } ?>
                 </td>
                 <td>
-                        <?php echo $paper['Alias'] ?>
+                        <?php echo $paper['Paper']['pages'] ?>
+                </td>
+                <td>
+                        <ul>
+                        <?php foreach ($paper['Alias'] as $alias): ?>
+                        <li> <?php echo $html->link($alias['name'],
+                        '/authors/show/'.$alias['id']) ?></li>
+                        <?php endforeach; ?>
+                        </ul>
                 </td>
 	</tr>
 <?php endforeach; ?>
