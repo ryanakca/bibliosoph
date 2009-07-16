@@ -8,6 +8,7 @@
         <th><?php echo $paginator->sort('Published in', 'published_on') ?></th>
 	<th>PDF</th>
 	<th>PS</th>
+        <th><?php echo $paginator->sort('Pages', 'pages') ?> </th>
         <th>Authors</th>
 </tr>
 <?php
@@ -42,6 +43,9 @@ foreach ($papers as $paper):
                         } else {
                             echo "No PS available";
                         } ?>
+                </td>
+                <td>
+                        <?php echo $paper['Paper']['pages'] ?>
                 </td>
                 <td>
                         <ul>

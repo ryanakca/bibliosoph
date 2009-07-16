@@ -9,7 +9,9 @@ class Paper extends AppModel {
                 'pdf' => array('rule' => 'url',
                                'allowEmpty' => true),
 		'ps' => array('rule' => 'url',
-                              'allowEmpty' => true)
+                              'allowEmpty' => true),
+                'pages' => array ('rule' => 'numeric',
+                                  'allowEmpty' => true)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
