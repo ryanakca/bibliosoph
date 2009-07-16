@@ -23,22 +23,13 @@ class PapersController extends AppController {
             $this->set('papers', $this->paginate());
         }
 
-/*        function by_author($author_id = null) {
-            if (!$author_id) {
-                $this->Session->setFlash(__('No author specified', true));
-                $this->redirect(array('action'=>'index'));
-            }
-            $this->Paper->recursive = 2;
-            $paginate = $this->paginate('Paper', 'Paper.Alias.Author.author_id' => $author_id);
-            $this->set('author', $paginate);
-}*/
-
         function view($tr_id = null) {
 		if (!$tr_id) {
 			$this->Session->setFlash(__('Invalid Paper.', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->set('paper', $this->Paper->find('first', array('Paper.tr-id' => $tr_id)));
+                $this->set('paper', $this->Paper->find('first', array(
+                    'conditions' => array('Paper.tr-id' => $tr_id))));
         }
 
 	function admin_index() {
