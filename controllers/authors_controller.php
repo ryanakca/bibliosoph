@@ -16,6 +16,7 @@ class AuthorsController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->set('author', $this->Author->read(null, $id));
+                $this->set('papers', $this->paginate($this->Author->Alias->Paper));
 	}
 
 	function admin_index() {

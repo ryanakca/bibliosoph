@@ -1,4 +1,5 @@
 <div class="authors view">
+<?php $paginator->options(array('url' => $this->passedArgs)); ?>
 <h2><?php  __('Author');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
@@ -23,30 +24,48 @@
 	</dl>
 </div>
 <div class="related">
-<?php if (!empty($author['Alias'])):?>
+<?php if (!empty($papers)):?>
 	<h3><?php __('Related Papers');?></h3>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
-		<th><?php __('Name'); ?></th>
-                <th><?php __('Papers'); ?></th>
+		<th><?php echo $paginator->sort('Techreport ID', 'tr-id'); ?></th>
+                <th><?php echo $paginator->sort('Title', 'title') ?></th>
+                <th><?php echo $paginator->sort('Published in', 'published_on') ?></th>
+                <th>PDF</th>
+                <th>PS</th>
+                <th><?php echo $paginator->sort('Pages', 'pages') ?></th>
 	</tr>
 	<?php
 		$i = 0;
-		foreach ($author['Alias'] as $alias):
-                    foreach ($alias['Paper'] as $paper):
+                foreach ($papers as $paper):
                         $class = null;
                         if ($i++ % 2 == 0) {
                                 $class = ' class="altrow"';
                         }
                 ?>
                 <tr>
-                <td><?php echo $paper['tr-id']; ?></td>
-                <td><?php echo $paper['title']; ?></td>
+                <td><?php echo $html->link($paper['Paper']['tr-id'], '/papers/view/'.$paper['Paper']['tr-id']); ?></td>
+                <td><?php echo $paper['Paper']['title']; ?></td>
+                <td>
+                    <?php echo date('F Y',
+                    strtotime($paper['Paper']['published_on'])); ?>
+                <td>
+                        <?php if (strlen($paper['Paper']['pdf'])) {
+                            echo $html->link('PDF', $paper['Paper']['pdf']);
+                        } else {
+                            echo "No PDF available";
+                        } ?>
+                </td>
+                <td>
+                        <?php if (strlen($paper['Paper']['ps'])) {
+                            echo $html->link('PS', $paper['Paper']['ps']);
+                        } else {
+                            echo "No PS available";
+                        } ?>
+                    </td>
+                <td><?php echo $paper['Paper']['pages'] ?></td>
                 </tr>
-
-        <?php        endforeach;
-                endforeach;
-         ?>
+        <?php endforeach; ?>
 	</table>
 <?php endif; ?>
 </div>
