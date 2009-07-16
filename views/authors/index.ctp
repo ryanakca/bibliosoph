@@ -8,14 +8,10 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('first_name');?></th>
-	<th><?php echo $paginator->sort('initial');?></th>
-	<th><?php echo $paginator->sort('last_name');?></th>
+        <th><?php echo $paginator->sort('Name'/*'Last name'*/, 'last_name')/*.',&nbsp;'.$paginator->sort('First name',
+            'first_name').' '.$paginator->sort('Initial', 'initial')*/;?></th>
 	<th><?php echo $paginator->sort('email');?></th>
-	<th><?php echo $paginator->sort('homepage');?></th>
-	<th><?php echo $paginator->sort('updated_on');?></th>
-	<th class="actions"><?php __('Actions');?></th>
+        <th><?php __('Homepage'); ?></th>
 </tr>
 <?php
 $i = 0;
@@ -27,25 +23,17 @@ foreach ($authors as $author):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $author['Author']['id']; ?>
+			<?php echo $html->link($author['Author']['last_name'].',
+                        '.$author['Author']['first_name'].'
+                        '.$author['Author']['initial'],
+                        '/authors/view/'.$author['Author']['id']); ?>
 		</td>
 		<td>
-			<?php echo $author['Author']['first_name']; ?>
+			<?php echo $html->link($author['Author']['email'],
+                        'mailto:'.$author['Author']['email']) ?>
 		</td>
 		<td>
-			<?php echo $author['Author']['initial']; ?>
-		</td>
-		<td>
-			<?php echo $author['Author']['last_name']; ?>
-		</td>
-		<td>
-			<?php echo $author['Author']['email']; ?>
-		</td>
-		<td>
-			<?php echo $author['Author']['homepage']; ?>
-		</td>
-		<td>
-			<?php echo $author['Author']['updated_on']; ?>
+			<?php echo $html->link('Homepage', $author['Author']['homepage']); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
