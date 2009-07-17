@@ -11,7 +11,7 @@
 		echo $form->input('pdf');
 		echo $form->input('ps');
                 echo $form->input('pages');
-                echo $form->input('alias', array('type' => 'select', 'multiple'
+                echo $form->input('Alias', array('type' => 'select', 'multiple'
                     => true, 'label' => 'Author(s)'));
 	?>
 	</fieldset>

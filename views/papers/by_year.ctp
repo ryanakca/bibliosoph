@@ -52,7 +52,7 @@ foreach ($papers as $paper):
                         <ul>
                         <?php foreach ($paper['Alias'] as $alias): ?>
                         <li> <?php echo $html->link($alias['name'],
-                        '/authors/show/'.$alias['id']) ?></li>
+                        '/authors/view/'.$alias['author_id']) ?></li>
                         <?php endforeach; ?>
                         </ul>
                         <?php endif; ?>

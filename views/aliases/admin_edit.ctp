@@ -6,6 +6,8 @@
 		echo $form->input('name');
 		echo $form->input('id');
 		echo $form->input('author_id');
+                echo $form->input('Paper', array('type' => 'select', 'multiple'
+                    => true, 'label' => 'Paper(s)'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
