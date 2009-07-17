@@ -4,7 +4,8 @@ class Paper extends AppModel {
 	var $name = 'Paper';
         var $displayField = 'tr-id';
 	var $validate = array(
-		'tr-id' => array('notempty'),
+                'tr-id' => array('rule' => 'isUnique',
+                                'message' => 'Please use a unique Techreport ID.'),
 		'title' => array('notempty'),
                 'pdf' => array('rule' => 'url',
                                'allowEmpty' => true),
