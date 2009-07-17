@@ -24,7 +24,7 @@
 	</dl>
 </div>
 <div class="related">
-<?php if (!empty($papers)):?>
+<?php if (!empty($author['Alias'])):?>
 	<h3><?php __('Related Papers');?></h3>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
@@ -37,35 +37,38 @@
 	</tr>
 	<?php
 		$i = 0;
-                foreach ($papers as $paper):
+                foreach ($author['Alias'] as $alias):
+                foreach ($alias['Paper'] as $paper):
                         $class = null;
                         if ($i++ % 2 == 0) {
                                 $class = ' class="altrow"';
                         }
                 ?>
                 <tr>
-                <td><?php echo $html->link($paper['Paper']['tr-id'], '/papers/view/'.$paper['Paper']['tr-id']); ?></td>
-                <td><?php echo $paper['Paper']['title']; ?></td>
+                <td><?php echo $html->link($paper['tr-id'], '/papers/view/'.$paper['tr-id']); ?></td>
+                <td><?php echo $paper['title']; ?></td>
                 <td>
                     <?php echo date('F Y',
-                    strtotime($paper['Paper']['published_on'])); ?>
+                    strtotime($paper['published_on'])); ?>
                 <td>
-                        <?php if (strlen($paper['Paper']['pdf'])) {
-                            echo $html->link('PDF', $paper['Paper']['pdf']);
+                        <?php if (strlen($paper['pdf'])) {
+                            echo $html->link('PDF', $paper['pdf']);
                         } else {
                             echo "No PDF available";
                         } ?>
                 </td>
                 <td>
-                        <?php if (strlen($paper['Paper']['ps'])) {
-                            echo $html->link('PS', $paper['Paper']['ps']);
+                        <?php if (strlen($paper['ps'])) {
+                            echo $html->link('PS', $paper['ps']);
                         } else {
                             echo "No PS available";
                         } ?>
                     </td>
-                <td><?php echo $paper['Paper']['pages'] ?></td>
+                <td><?php echo $paper['pages'] ?></td>
                 </tr>
-        <?php endforeach; ?>
+        <?php endforeach;
+            endforeach; ?>
+
 	</table>
 <?php endif; ?>
 </div>
