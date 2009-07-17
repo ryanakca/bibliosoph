@@ -5,7 +5,7 @@
         <th><?php echo $paginator->sort('Techreport ID', 'tr-id') ?></th>
         <th><?php echo $paginator->sort('Title', 'title') ?></th>
         <th><?php echo $paginator->sort('Published in', 'published_on') ?></th>
-	<th>PDF</th>
+        <th>PDF</th>
 	<th>PS</th>
         <th><?php echo $paginator->sort('Pages', 'pages') ?> </th>
         <th>Authors</th>
@@ -30,15 +30,19 @@ foreach ($papers as $paper):
                         strtotime($paper['Paper']['published_on'])); ?>
 		</td>
 		<td>
-                        <?php if (strlen($paper['Paper']['pdf'])) {
-                            echo $html->link('PDF', $paper['Paper']['pdf']);
+                        <?php if ($paper['Pdf']['name']) {
+                            echo $html->link('PDF',
+                                '/files/'.$paper['Pdf']['name']).'
+                                ('.round($paper['Pdf']['size'] / 1024).' KB)';
                         } else {
                             echo "No PDF available";
                         } ?>
 		</td>
                 <td>
-                        <?php if (strlen($paper['Paper']['ps'])) {
-                            echo $html->link('PS', $paper['Paper']['ps']);
+                        <?php if ($paper['Ps']['name']) {
+                            echo $html->link('PS',
+                                '/files/'.$paper['Ps']['name']).'
+                                ('.round($paper['Ps']['size'] / 1024).' KB)';
                         } else {
                             echo "No PS available";
                         } ?>

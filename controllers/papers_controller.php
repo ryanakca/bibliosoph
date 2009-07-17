@@ -3,6 +3,7 @@ class PapersController extends AppController {
 
 	var $name = 'Papers';
 	var $helpers = array('Html', 'Form');
+        var $components = array('FileUpload');
 
 	function index() {
 		$this->Paper->recursive = 1;
@@ -49,7 +50,7 @@ class PapersController extends AppController {
 		if (!empty($this->data)) {
 			$this->Paper->create();
 			if ($this->Paper->save($this->data)) {
-				$this->Session->setFlash(__('The Paper has been saved', true));
+		                $this->Session->setFlash(__('The Paper has been saved', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('The Paper could not be saved. Please, try again.', true));
@@ -65,9 +66,11 @@ class PapersController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if ($this->Paper->save($this->data)) {
-				$this->Session->setFlash(__('The Paper has been saved', true));
-				$this->redirect(array('action'=>'index'));
+                        if ($this->FileUpload->success) {
+			    if ($this->Paper->save($this->data)) {
+		                $this->Session->setFlash(__('The Paper has been saved', true));
+                                $this->redirect(array('action'=>'index'));
+                            }
 			} else {
 				$this->Session->setFlash(__('The Paper could not be saved. Please, try again.', true));
 			}

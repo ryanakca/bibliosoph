@@ -10,7 +10,7 @@ class AuthorsController extends AppController {
 	}
 
 	function view($id = null) {
-                $this->Author->recursive = 2;
+                $this->Author->recursive = 5;
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Author.', true));
 			$this->redirect(array('action'=>'index'));

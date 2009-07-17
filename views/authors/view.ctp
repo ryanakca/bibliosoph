@@ -51,19 +51,23 @@
                     <?php echo date('F Y',
                     strtotime($paper['published_on'])); ?>
                 <td>
-                        <?php if (strlen($paper['pdf'])) {
-                            echo $html->link('PDF', $paper['pdf']);
+                        <?php if ($paper['Pdf']) {
+                            echo $html->link('PDF',
+                                '/files/'.$paper['Pdf']['name']).'
+                                ('.round($paper['Pdf']['size'] / 1024).' KB)';
                         } else {
                             echo "No PDF available";
                         } ?>
                 </td>
                 <td>
-                        <?php if (strlen($paper['ps'])) {
-                            echo $html->link('PS', $paper['ps']);
+                        <?php if ($paper['Ps']) {
+                            echo $html->link('PS',
+                                '/files/'.$paper['Ps']['name']).'
+                                ('.round($paper['Ps']['size'] / 1024).' KB)';
                         } else {
                             echo "No PS available";
                         } ?>
-                    </td>
+                </td>
                 <td><?php echo $paper['pages'] ?></td>
                 </tr>
         <?php endforeach;

@@ -12,9 +12,9 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('tr-id');?></th>
 	<th><?php echo $paginator->sort('title');?></th>
 	<th><?php echo $paginator->sort('published_on');?></th>
-	<th><?php echo $paginator->sort('update_on');?></th>
-	<th><?php echo $paginator->sort('pdf');?></th>
-	<th><?php echo $paginator->sort('ps');?></th>
+	<th><?php echo $paginator->sort('updated');?></th>
+	<th>PDF</th>
+	<th>PS</th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -39,14 +39,26 @@ foreach ($papers as $paper):
 			<?php echo $paper['Paper']['published_on']; ?>
 		</td>
 		<td>
-			<?php echo $paper['Paper']['update_on']; ?>
+			<?php echo $paper['Paper']['updated']; ?>
 		</td>
-		<td>
-			<?php echo $paper['Paper']['pdf']; ?>
-		</td>
-		<td>
-			<?php echo $paper['Paper']['ps']; ?>
-		</td>
+                <td>
+                        <?php if (strlen($paper['Pdf']['name'])) {
+                            echo $html->link('PDF',
+                                '/files/'.$paper['Pdf']['name']).'
+                                ('.round($paper['Pdf']['size'] / 1024).' KB)';
+                        } else {
+                            echo "No PDF available";
+                        } ?>
+                </td>
+                <td>
+                        <?php if (strlen($paper['Ps']['name'])) {
+                            echo $html->link('PS',
+                                '/files/'.$paper['Ps']['name']).'
+                                ('.round($paper['Ps']['size'] / 1024).' KB)';
+                        } else {
+                            echo "No PS available";
+                        } ?>
+                </td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $paper['Paper']['id'])); ?>
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $paper['Paper']['id'])); ?>

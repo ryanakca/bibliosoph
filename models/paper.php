@@ -7,10 +7,6 @@ class Paper extends AppModel {
                 'tr-id' => array('rule' => 'isUnique',
                                 'message' => 'Please use a unique Techreport ID.'),
 		'title' => array('notempty'),
-                'pdf' => array('rule' => 'url',
-                               'allowEmpty' => true),
-		'ps' => array('rule' => 'url',
-                              'allowEmpty' => true),
                 'pages' => array ('rule' => 'numeric',
                                   'allowEmpty' => true)
 	);
@@ -33,6 +29,35 @@ class Paper extends AppModel {
 			'insertQuery' => ''
 		)
 	);
+
+        var $hasOne = array(
+                'Pdf' => array(
+                        'className' => 'Pdf',
+                        'foreignKey' => 'paper_id',
+                        'dependent' => false,
+                        'conditions' => array('Pdf.type' => 'application/pdf'),
+                        'fields' => '',
+                        'order' => '',
+                        'limit' => '',
+                        'offset' => '',
+                        'exclusive' => '',
+                        'finderQuery' => '',
+                        'counterQuery' => ''
+                ),
+                'Ps' => array(
+                        'className' => 'Ps',
+                        'foreignKey' => 'paper_id',
+                        'dependent' => false,
+                        'conditions' => array('Ps.type' => array('application/ps', 'application/postscript')),
+                        'fields' => '',
+                        'order' => '',
+                        'limit' => '',
+                        'offset' => '',
+                        'exclusive' => '',
+                        'finderQuery' => '',
+                        'counterQuery' => ''
+                )
+        );
 
 }
 ?>
