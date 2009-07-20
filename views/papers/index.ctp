@@ -20,7 +20,7 @@ foreach ($papers as $paper):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $paper['Paper']['tr-id']; ?>
+			<?php echo $html->link($paper['Paper']['tr-id'], '/papers/view/'.$paper['Paper']['tr-id']); ?>
 		</td>
 		<td>
 			<?php echo $paper['Paper']['title']; ?>

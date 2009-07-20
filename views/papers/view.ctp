@@ -13,17 +13,30 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Published in'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $paper['Paper']['published_on']; ?>
+			<?php echo date('F Y',
+                            strtotime($paper['Paper']['published_on'])); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PDF'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $paper['Paper']['pdf']; ?>
+                        <?php if ($paper['Pdf']['name']) {
+                            echo $html->link('PDF',
+                                '/files/'.$paper['Pdf']['name']).'
+                                ('.round($paper['Pdf']['size'] / 1024).' KB)';
+                        } else {
+                            echo "No PDF available";
+                        } ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PS'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $paper['Paper']['ps']; ?>
+                        <?php if ($paper['Ps']['name']) {
+                            echo $html->link('PS',
+                                '/files/'.$paper['Ps']['name']).'
+                                ('.round($paper['Ps']['size'] / 1024).' KB)';
+                        } else {
+                            echo "No PS available";
+                        } ?>
 			&nbsp;
 		</dd>
                 <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Pages'); ?></dt>

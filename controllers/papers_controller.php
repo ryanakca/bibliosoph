@@ -66,11 +66,9 @@ class PapersController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-                        if ($this->FileUpload->success) {
-			    if ($this->Paper->save($this->data)) {
+			if ($this->Paper->save($this->data)) {
 		                $this->Session->setFlash(__('The Paper has been saved', true));
                                 $this->redirect(array('action'=>'index'));
-                            }
 			} else {
 				$this->Session->setFlash(__('The Paper could not be saved. Please, try again.', true));
 			}
