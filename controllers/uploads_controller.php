@@ -72,6 +72,13 @@ class UploadsController extends AppController {
 			$this->redirect(array('action'=>'index'));
                 }
                 $file = $this->Upload->find('first', array('Upload.id' => $id));
+                if ($file['Upload']['type'] == 'application/pdf') {
+                    $paper = $this->Upload->Paper->find('first', array('Paper.pdf_id' => $id));
+                    unset($paper['Paper']['pdf_id']);
+                } else {
+                    $paper = $this->Upload->Paper->find('first', array('Paper.ps_id' => $id));
+                    unset($paper['Paper']['ps_id']);
+                }
 		if ($this->FileUpload->removeFile($file['Upload']['name'])) {
 			$this->Session->setFlash(__('Upload deleted', true));
 			$this->redirect(array('action'=>'index'));
