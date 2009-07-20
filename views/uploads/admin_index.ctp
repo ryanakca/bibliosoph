@@ -45,7 +45,7 @@ foreach ($uploads as $upload):
 			<?php echo $upload['Upload']['modified']; ?>
 		</td>
 		<td>
-			<?php echo $upload['Upload']['paper_id']; ?>
+			<?php echo $upload['Paper']['tr-id']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $upload['Upload']['id'])); ?>

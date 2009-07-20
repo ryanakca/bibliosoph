@@ -5,8 +5,6 @@
 	<?php
 		echo $form->input('id');
 		echo $form->input('name');
-		echo $form->input('type');
-		echo $form->input('size');
 		echo $form->input('paper_id');
 	?>
 	</fieldset>
