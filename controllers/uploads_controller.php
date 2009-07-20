@@ -34,7 +34,12 @@ class UploadsController extends AppController {
                         } else {
                                 $this->FileUpload->fileName = $paper['Paper']['tr-id'].$this->FileUpload->_ext();
                                 $this->FileUpload->processFile();
-                                if ($this->FileUpload->success) {
+                                if ($this->FileUpload->uploadedFile['type'] == 'application/pdf') {
+                                    $paper['Paper']['pdf_id'] = $this->FileUpload->uploadId;
+                                } else {
+                                    $paper['Paper']['ps_id'] = $this->FileUpload->uploadId;
+                                }
+                                if ($this->FileUpload->success && $this->Upload->Paper->save($paper)) {
                                         $this->Session->setFlash(__('The file has been uploaded.', true));
                                         $this->redirect(array('action'=>'index'));
                                 } else {
