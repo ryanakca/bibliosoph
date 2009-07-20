@@ -8,7 +8,6 @@
 		echo $form->input('last_name');
 		echo $form->input('email');
 		echo $form->input('homepage');
-		echo $form->input('updated_on');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

@@ -23,13 +23,16 @@ foreach ($aliases as $alias):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $alias['Alias']['name']; ?>
-		</td>
-		<td>
 			<?php echo $alias['Alias']['id']; ?>
 		</td>
 		<td>
-			<?php echo $alias['Alias']['author_id']; ?>
+			<?php echo $alias['Alias']['name']; ?>
+		</td>
+		<td>
+			<?php echo $html->link($alias['Author']['last_name'].', '.$alias['Author']['first_name'].'
+                        '.$alias['Author']['initial'],
+                        array('controller'=>'authors', 'action'=>'view',
+                            $alias['Author']['id'])); ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $alias['Alias']['id'])); ?>

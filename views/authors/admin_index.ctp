@@ -13,8 +13,8 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('initial');?></th>
 	<th><?php echo $paginator->sort('last_name');?></th>
 	<th><?php echo $paginator->sort('email');?></th>
-	<th><?php echo $paginator->sort('homepage');?></th>
-	<th><?php echo $paginator->sort('updated_on');?></th>
+	<th>Homepage</th>
+	<th><?php echo $paginator->sort('updated');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -39,13 +39,15 @@ foreach ($authors as $author):
 			<?php echo $author['Author']['last_name']; ?>
 		</td>
 		<td>
-			<?php echo $author['Author']['email']; ?>
+			<?php echo $html->link($author['Author']['email'],
+                        'mailto:'.$author['Author']['email']); ?>
 		</td>
 		<td>
-			<?php echo $author['Author']['homepage']; ?>
+			<?php echo $html->link('Homepage',
+                        $author['Author']['homepage']); ?>
 		</td>
 		<td>
-			<?php echo $author['Author']['updated_on']; ?>
+			<?php echo $author['Author']['updated']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $author['Author']['id'])); ?>

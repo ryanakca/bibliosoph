@@ -1,19 +1,21 @@
 <div class="aliases view">
 <h2><?php  __('Alias');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $alias['Alias']['name']; ?>
-			&nbsp;
-		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $alias['Alias']['id']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Author Id'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $alias['Alias']['author_id']; ?>
+			<?php echo $alias['Alias']['name']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Author'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $html->link($alias['Author']['last_name'].',
+                        '.$alias['Author']['first_name'].'
+                        '.$alias['Author']['initial'], array('action'=>'view', 'controller'=>'authors', $alias['Alias']['author_id'])); ?>
 			&nbsp;
 		</dd>
 	</dl>
