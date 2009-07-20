@@ -45,6 +45,15 @@ class FileUploadComponent extends Object{
     * @access public
     */
   var $fileVar = 'file';
+
+  /***************************************************
+    * fileName is the name of the file to be saved after the upload
+    *
+    * @contributer Carlos Pires, (http://bakery.cakephp.org/articles/view/file-upload-component-w-automagic-model-optional)
+    * @var string
+    * @access public
+    */
+  var $fileName = null;
   
   /***************************************************
     * allowedTypes is the allowed types of files that will be saved
@@ -273,7 +282,8 @@ class FileUploadComponent extends Object{
     */
   function processFile(){
     $up_dir = WWW_ROOT . $this->uploadDir;
-    $target_path = $up_dir . DS . $this->uploadedFile['name'];
+    $target_name = ($this->fileName != null) ? $this->fileName : $this->uploadedFile['name'];
+    $target_path = $up_dir . DS . $target_name;
     $temp_path = substr($target_path, 0, strlen($target_path) - strlen($this->_ext())); //temp path without the ext
     //make sure the file doesn't already exist, if it does, add an itteration to it
 		$i=1;
