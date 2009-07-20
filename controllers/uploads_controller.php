@@ -21,14 +21,26 @@ class UploadsController extends AppController {
 	function admin_add() {
 		if (!empty($this->data)) {
                         $paper = $this->Upload->Paper->find('first', array('id' => $this->data['Upload']['paper_id']));
-                        $this->FileUpload->fileName = $paper['Paper']['tr-id'].$this->FileUpload->_ext();
-                        $this->FileUpload->processFile();
-			if ($this->FileUpload->success) {
-				$this->Session->setFlash(__('The file has been uploaded.', true));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash($this->FileUpload->showErrors());
-			}
+                        /* We don't want to upload a new PDF for the paper if we already have 
+                         * one. */
+                        if (($this->FileUpload->uploadedFile['type'] == 'application/pdf') && isset($paper['Paper']['pdf_id'])) {
+                                $this->Session->setFlash(__('This paper already has a PDF, please delete it first.', true));
+                                $this->redirect(array('action'=>'index'));
+                        /* Same with PS */
+                        } elseif ((in_array($this->FileUpload->uploadedFile['type'], 
+                                    array('application/postscript', 'application/ps')) && isset($paper['Paper']['ps_id']))) {
+                                $this->Session->setFlash(__('This paper already has a PS, please delete it first.', true));
+                                $this->redirect(array('action'=>'index'));
+                        } else {
+                                $this->FileUpload->fileName = $paper['Paper']['tr-id'].$this->FileUpload->_ext();
+                                $this->FileUpload->processFile();
+                                if ($this->FileUpload->success) {
+                                        $this->Session->setFlash(__('The file has been uploaded.', true));
+                                        $this->redirect(array('action'=>'index'));
+                                } else {
+                                        $this->Session->setFlash($this->FileUpload->showErrors());
+                                }
+                        }
 		}
 		$papers = $this->Upload->Paper->find('list');
 		$this->set(compact('papers'));
