@@ -114,7 +114,7 @@ class FileUploadComponent extends Object{
    * @var boolean
    * @access public
    */
-  var $automatic = true; 
+  var $automatic = false;
   
   /***************************************************
     * data and params are the controller data and params
@@ -245,7 +245,16 @@ class FileUploadComponent extends Object{
      
     //delete main image -- $name
     if(unlink($target_path)){
-      return true;
+        if ($this->fileModel) {
+            $model = $this->getModel();
+            if ($model->del($model->id)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
     } else {
       return false;
     }
@@ -282,7 +291,7 @@ class FileUploadComponent extends Object{
     */
   function processFile(){
     $up_dir = WWW_ROOT . $this->uploadDir;
-    $target_name = ($this->fileName != null) ? $this->fileName : $this->uploadedFile['name'];
+    $target_name = (isset($this->fileName)) ? $this->fileName : $this->uploadedFile['name'];
     $target_path = $up_dir . DS . $target_name;
     $temp_path = substr($target_path, 0, strlen($target_path) - strlen($this->_ext())); //temp path without the ext
     //make sure the file doesn't already exist, if it does, add an itteration to it
@@ -294,7 +303,7 @@ class FileUploadComponent extends Object{
     
     //Ability to dynamically add other model fields added by Jon Langevin
     $save_data = array();
-    if($this->fileModel){
+    if($this->fileModel) {
       $save_data = $this->data[$this->fileModel];
       unset($save_data['file']);
     }

@@ -20,8 +20,10 @@ class UploadsController extends AppController {
 
 	function admin_add() {
 		if (!empty($this->data)) {
+                        $paper = $this->Upload->Paper->find('first', array('id' => $this->data['Upload']['paper_id']));
+                        $this->FileUpload->fileName = $paper['Paper']['tr-id'].$this->FileUpload->_ext();
+                        $this->FileUpload->processFile();
 			if ($this->FileUpload->success) {
-                                $this->set('pdf', $this->FileUpload->finalFile);
 				$this->Session->setFlash(__('The file has been uploaded.', true));
 				$this->redirect(array('action'=>'index'));
 			} else {
@@ -56,8 +58,9 @@ class UploadsController extends AppController {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Upload', true));
 			$this->redirect(array('action'=>'index'));
-		}
-		if ($this->Upload->del($id)) {
+                }
+                $file = $this->Upload->find('first', array('Upload.id' => $id));
+		if ($this->FileUpload->removeFile($file['Upload']['name'])) {
 			$this->Session->setFlash(__('Upload deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}
