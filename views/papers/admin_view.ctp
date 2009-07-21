@@ -21,19 +21,32 @@
 			<?php echo $paper['Paper']['published_on']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Update On'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Updated On'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $paper['Paper']['update_on']; ?>
+			<?php echo $paper['Paper']['updated']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Pdf'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $paper['Paper']['pdf']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Ps'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $paper['Paper']['ps']; ?>
+                <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                        <?php if ($paper['Pdf']['name']) {
+                            echo $html->link('PDF',
+                                '/files/'.$paper['Pdf']['name']).'
+                                ('.round($paper['Pdf']['size'] / 1024).' KB)';
+                        } else {
+                            echo "No PDF available";
+                        } ?>
+                        &nbsp;
+                </dd>
+                <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PS'); ?></dt>
+                <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                        <?php if ($paper['Ps']['name']) {
+                            echo $html->link('PS',
+                                '/files/'.$paper['Ps']['name']).'
+                                ('.round($paper['Ps']['size'] / 1024).' KB)';
+                        } else {
+                            echo "No PS available";
+                        } ?>
+                        &nbsp;
 			&nbsp;
 		</dd>
 	</dl>

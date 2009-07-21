@@ -3,9 +3,17 @@ class PapersController extends AppController {
 
 	var $name = 'Papers';
 	var $helpers = array('Html', 'Form');
-        var $components = array('FileUpload');
+        var $components = array('FileUpload', 'Auth');
+        function beforeFilter() {
+            $this->Auth->allow('index', 'by_year', 'view');
+        }
 
-	function index() {
+        function front_page() {
+            $this->Paper->recursive = 1;
+            $this->set('papers', $this->Paper->find('list', array('fields'=>array('year', 'year'))));
+        }
+
+	function all() {
 		$this->Paper->recursive = 1;
 		$this->set('papers', $this->paginate());
 	}

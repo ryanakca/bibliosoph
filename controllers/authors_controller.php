@@ -3,6 +3,10 @@ class AuthorsController extends AppController {
 
 	var $name = 'Authors';
 	var $helpers = array('Html', 'Form');
+        var $components = array('Auth');
+        function beforeFilter() {
+                $this->Auth->allow('index', 'view');
+        }
 
 	function index() {
 		$this->Author->recursive = 0;

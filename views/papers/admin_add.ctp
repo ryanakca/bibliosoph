@@ -5,7 +5,7 @@
 	<?php
 		echo $form->input('tr-id');
 		echo $form->input('title');
-		echo $form->input('published_on', array('dateFormat' => 'MY',
+		echo $form->input('published_on', array('dateFormat' => 'DMY',
                     'timeFormat' => 'none'));
                 echo $form->input('pages');
                 echo $form->input('Alias', array('type' => 'select', 'multiple'

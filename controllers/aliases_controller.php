@@ -3,6 +3,10 @@ class AliasesController extends AppController {
 
 	var $name = 'Aliases';
 	var $helpers = array('Html', 'Form');
+        var $components = array('Auth');
+        function beforeFilter() {
+            $this->Auth->allow('index');
+        }
 
 	function index() {
 		$this->Alias->recursive = 0;
@@ -54,7 +58,7 @@ class AliasesController extends AppController {
 			$this->data = $this->Alias->read(null, $id);
 		}
 		$papers = $this->Alias->Paper->find('list');
-		$authors = $this->Alias->Author->find('list');
+                $authors = $this->Alias->Author->find('list', array('fields'=>array('id', 'first_name', 'last_name')));
 		$this->set(compact('papers','authors'));
 	}
 
