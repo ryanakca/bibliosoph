@@ -26,7 +26,7 @@ foreach ($authors as $author):
 			<?php echo $html->link($author['Author']['last_name'].',
                         '.$author['Author']['first_name'].'
                         '.$author['Author']['initial'],
-                        array('action'=>'view', $author['Author']['id']); ?>
+                        array('action'=>'view', $author['Author']['id'])); ?>
 		</td>
 		<td>
 			<?php echo $html->link($author['Author']['email'],
