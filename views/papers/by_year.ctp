@@ -30,21 +30,25 @@ foreach ($papers as $paper):
 			<?php echo date('F Y',
                         strtotime($paper['Paper']['published_on'])); ?>
 		</td>
-		<td>
-                        <?php if (strlen($paper['Paper']['pdf'])) {
-                            echo $html->link('PDF', $paper['Paper']['pdf']);
+                <td>
+                        <?php if ($paper['Pdf']['name']) {
+                            echo $html->link('PDF',
+                                '/files/'.$paper['Pdf']['name']).'
+                                ('.round($paper['Pdf']['size'] / 1024).' KB)';
                         } else {
                             echo "No PDF available";
                         } ?>
-		</td>
+                </td>
                 <td>
-                        <?php if (strlen($paper['Paper']['ps'])) {
-                            echo $html->link('PS', $paper['Paper']['ps']);
+                        <?php if ($paper['Ps']['name']) {
+                            echo $html->link('PS',
+                                '/files/'.$paper['Ps']['name']).'
+                                ('.round($paper['Ps']['size'] / 1024).' KB)';
                         } else {
                             echo "No PS available";
                         } ?>
                 </td>
-                <td>
+		<td>
                         <?php echo $paper['Paper']['pages'] ?>
                 </td>
                 <td>
@@ -52,7 +56,7 @@ foreach ($papers as $paper):
                         <ul>
                         <?php foreach ($paper['Alias'] as $alias): ?>
                         <li> <?php echo $html->link($alias['name'],
-                        '/authors/view/'.$alias['author_id']) ?></li>
+                        array('controller'=>'authors', 'action'=>'view', $alias['author_id'])) ?></li>
                         <?php endforeach; ?>
                         </ul>
                         <?php endif; ?>
