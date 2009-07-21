@@ -8,12 +8,7 @@ class PapersController extends AppController {
             $this->Auth->allow('index', 'by_year', 'view');
         }
 
-        function index() {
-            $this->Paper->recursive = 1;
-            $this->set('papers', $this->Paper->find('list', array('fields'=>array('id', 'published_on'))));
-        }
-
-	function all() {
+	function index() {
 		$this->Paper->recursive = 1;
 		$this->set('papers', $this->paginate());
 	}
