@@ -52,6 +52,7 @@
                 <td>
                     <?php echo date('F Y',
                     strtotime($paper['published_on'])); ?>
+                </td>
                 <td>
                         <?php if ($paper['Pdf']) {
                             echo $html->link('PDF',
