@@ -51,5 +51,13 @@ foreach ($aliases as $alias):
 <div class="actions">
 	<ul>
 		<li><?php echo $html->link(__('New Alias', true), array('action'=>'add')); ?></li>
+                <li><?php echo $html->link(__('Papers', true),
+                    array('controller'=>'papers', 'action'=>'index')); ?></li>
+                <li><?php echo $html->link(__('Authors', true),
+                    array('controller'=>'authors', 'action'=>'index')); ?></li>
+                <li><?php echo $html->link(__('Uploads', true),
+                    array('controller'=>'uploads', 'action'=>'index')); ?></li>
+                <li><?php echo $html->link(__('Logout', true),
+                    array('controller'=>'users', 'action'=>'logout')); ?></li>
 	</ul>
 </div>
