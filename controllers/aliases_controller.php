@@ -9,6 +9,7 @@ class AliasesController extends AppController {
         }
 
 	function index() {
+                $this->pageTitle = 'Aliases';
 		$this->Alias->recursive = 0;
 		$this->set('aliases', $this->paginate());
 	}

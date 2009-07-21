@@ -9,6 +9,7 @@ class PapersController extends AppController {
         }
 
 	function index() {
+                $this->pageTitle = 'Technical Reports';
 		$this->Paper->recursive = 1;
 		$this->set('papers', $this->paginate());
 	}
@@ -18,6 +19,7 @@ class PapersController extends AppController {
                 $this->Session->setFlash(__('No year specified', true));
                 $this->redirect(array('action'=>'index'));
             }
+            $this->pageTitle = 'Technical reports for the year ' . $year;
             $paginate = array('conditions' => array(
                 'Paper.published_on >' => date('Y-m-d H:i:s', strtotime($year.'-01-01 00:00:00')),
                 'Paper.published_on <' => date('Y-m-d H:i:s', strtotime($year.'-12-31 23:59:59'))
