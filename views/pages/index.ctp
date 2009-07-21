@@ -1,4 +1,7 @@
-View techreports by year: <?php
+<h1>Technical Report Meta-Index</h1>
+You can search technical reports:
+<ul>
+<li> by year: <?php
 $years = array();
 foreach ($papers as $paper):
     $year = date('Y', strtotime($paper));
@@ -11,7 +14,13 @@ foreach ($years as $year):
     if ($year != end($years)) {
         print $year . ', ';
     } else {
-        print $year . '.';
+        print $year . ';';
     }
 endforeach;
-?>
+?></li>
+<li> by <?php echo $html->link('author', array('action'=>'index',
+    'controller'=>'authors')); ?>;</li>
+    <li> by browsing through <?php echo $html->link('all',
+        array('controller'=>'papers', 'action'=>'index')); ?> of our papers.</li>
+</ul>
+
