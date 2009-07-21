@@ -19,6 +19,8 @@
  * @modifiedby    $LastChangedBy: gwoo $
  * @lastmodified  $Date: 2008-12-18 18:16:01 -0800 (Thu, 18 Dec 2008) $
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
+ *
+ * Modified by Ryan Kavanagh on 2009-07-21.
  */
 
 * {
@@ -28,11 +30,11 @@
 
 /* General Style Info */
 body {
-	background: #003d4c;
-	color: #fff;
-	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
 	font-size:90%;
-	margin: 0;
+        margin: 20px auto;
+        min-width: 900px;
+        max-width: 1000px;
+        border: solid 1px black;
 }
 a {
 	background:#fff;
@@ -52,27 +54,19 @@ h1, h2, h3, h4 {
 	font-weight: normal;
 }
 h1 {
-	background:#fff;
-	color: #003d4c;
-	font-size: 100%;
+	font-size: 200%;
 	margin: 0.1em 0;
 }
 h2 {
-	background:#fff;
-	color: #e32;
-	font-family:'Gill Sans','lucida grande',helvetica, arial, sans-serif;
-	font-size: 190%;
+	font-size: 180%;
 	margin: 0.3em 0;
 	padding-top: 0.8em;
 }
 h3 {
-	color: #993;
-	font-family:'Gill Sans','lucida grande',helvetica, arial, sans-serif;
 	font-size: 165%;
 	padding-top: 1.5em;
 }
 h4 {
-	color: #993;
 	font-weight: normal;
 	padding-top: 0.5em;
 }
@@ -89,25 +83,18 @@ ul, li {
 	padding: 10px 20px;
 }
 #header h1 {
-	background: #003d4c url('../img/cake.icon.gif') no-repeat left;
-	color: #fff;
 	padding: 0px 30px;
 }
 #header h1 a {
-	color: #fff;
-	background: #003d4c;
 	font-weight: normal;
 	text-decoration: none;
 }
 #header h1 a:hover {
-	color: #fff;
-	background: #003d4c;
 	text-decoration: underline;
 }
 #content{
 	background: #fff;
 	clear: both;
-	color: #333;
 	padding: 10px 20px 40px 20px;
 	overflow: auto;
 }
@@ -123,7 +110,6 @@ table {
 	border:1px solid #ccc;
 	border-right:0;
 	clear: both;
-	color: #333;
 	margin-bottom: 10px;
 	width: 100%;
 }
@@ -342,8 +328,7 @@ p.error em {
 	margin: 1em 0;
 }
 .success {
-	background: green;
-	color: #fff;
+	color: green;
 }
 
 /*  Actions  */
@@ -359,7 +344,6 @@ div.actions li {
 	white-space: nowrap;
 }
 div.actions ul li a {
-	background:#fff;
 	color: #003d4c;
 	text-decoration: none;
 }
