@@ -49,7 +49,7 @@
                     <ul>
                         <?php foreach ($paper['Alias'] as $alias): ?>
                         <li><?php echo $html->link($alias['name'],
-                        '/authors/view/'.$alias['author_id']); ?></li>
+                        array('controller'=>'authors', 'action'=>'view', $alias['author_id'])); ?></li>
                         <?php endforeach; ?>
                     </ul>
                 </dd>

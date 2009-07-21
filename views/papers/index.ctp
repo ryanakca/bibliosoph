@@ -20,7 +20,8 @@ foreach ($papers as $paper):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $html->link($paper['Paper']['tr-id'], '/papers/view/'.$paper['Paper']['tr-id']); ?>
+			<?php echo $html->link($paper['Paper']['tr-id'],
+                        array('action'=>'view', $paper['Paper']['tr-id'])); ?>
 		</td>
 		<td>
 			<?php echo $paper['Paper']['title']; ?>
@@ -55,7 +56,8 @@ foreach ($papers as $paper):
                         <ul>
                         <?php foreach ($paper['Alias'] as $alias): ?>
                         <li> <?php echo $html->link($alias['name'],
-                        '/authors/view/'.$alias['author_id']) ?></li>
+                        array('controller'=>'authors', 'action'=>'view',
+                        $alias['author_id'])) ?></li>
                         <?php endforeach; ?>
                         </ul>
                         <?php endif; ?>

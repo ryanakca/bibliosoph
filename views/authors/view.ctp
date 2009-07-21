@@ -45,7 +45,9 @@
                         }
                 ?>
                 <tr>
-                <td><?php echo $html->link($paper['tr-id'], '/papers/view/'.$paper['tr-id']); ?></td>
+                <td><?php echo $html->link($paper['tr-id'],
+                array('controller'=>'papers', 'action'=>'view',
+                $paper['tr-id'])); ?></td>
                 <td><?php echo $paper['title']; ?></td>
                 <td>
                     <?php echo date('F Y',
