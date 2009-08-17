@@ -21,8 +21,8 @@ class PapersController extends AppController {
             }
             $this->pageTitle = 'Technical reports for the year ' . $year;
             $paginate = array('conditions' => array(
-                'Paper.published_on >' => date('Y-m-d H:i:s', strtotime($year.'-01-01 00:00:00')),
-                'Paper.published_on <' => date('Y-m-d H:i:s', strtotime($year.'-12-31 23:59:59'))
+                'Paper.published_on >=' => date('Y-m-d H:i:s', strtotime($year.'-01-01 00:00:00')),
+                'Paper.published_on <=' => date('Y-m-d H:i:s', strtotime($year.'-12-31 23:59:59'))
                 ),
                 'contain' => array('Paper')
             );
