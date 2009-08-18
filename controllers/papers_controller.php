@@ -20,10 +20,10 @@ class PapersController extends AppController {
                 $this->redirect(array('action'=>'index'));
             }
             $this->pageTitle = 'Technical reports for the year ' . $year;
-            $paginate = array('conditions' => array(
-                'Paper.published_on >=' => date('Y-m-d H:i:s', strtotime($year.'-01-01 00:00:00')),
-                'Paper.published_on <=' => date('Y-m-d H:i:s', strtotime($year.'-12-31 23:59:59'))
-                ),
+            $this->paginate = array(
+                'conditions' => array(
+                   'YEAR(Paper.published_on)' => $year),
+                'order' => array('Paper.published_on' => 'asc'),
                 'contain' => array('Paper')
             );
             $this->set('papers', $this->paginate());
