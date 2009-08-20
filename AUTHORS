@@ -25,7 +25,10 @@ require 'webroot' . DIRECTORY_SEPARATOR . 'index.php';
 
 The files controllers/component/file_upload.php and
 views/helpers/file_upload.php are Copyright 2009 Webtechnick and are licensed
-under the MIT Licens.
+under the MIT License.
+
+The 'view' action in the Author controller was written by Mark Story and is
+distributed with his permission.
 
 All other changes are Copyright 2009 Ryan Kavanagh and are licensed under the
 GNU Affero General Public License version 3, or (at your option) any later

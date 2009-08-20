@@ -4,6 +4,7 @@ class AuthorsController extends AppController {
 	var $name = 'Authors';
 	var $helpers = array('Html', 'Form');
         var $components = array('Auth');
+
         function beforeFilter() {
                 $this->Auth->allow('index', 'view');
         }
@@ -12,16 +13,29 @@ class AuthorsController extends AppController {
 		$this->Author->recursive = 0;
 		$this->set('authors', $this->paginate());
 	}
+        function view($id = null) {
+               // Thanks to Mark Story from #cakephp on irc.freenode.net for
+               // contributing this code.
+               $this->Author->Alias->AliasesPaper->recursive = 2;
 
-	function view($id = null) {
-                $this->Author->recursive = 5;
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Author.', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->set('author', $this->Author->read(null, $id));
-                $this->set('papers', $this->paginate($this->Author->Alias->Paper));
-	}
+               if (!$id) {
+                    $this->Session->setFlash(__('Invalid Author.', true));
+                    $this->redirect(array('action'=>'index'));
+                }
+                $author = $this->Author->read(null, $id);
+                $aliasIds = Set::extract('/Alias/id', $author);
+                $this->Author->Alias->AliasesPaper->bindModel(array(
+                    'belongsTo' => array(
+                        'Paper' => array(
+                            'className' => 'Paper',
+                            'foreignKey' => 'paper_id'
+                        )
+                    )
+                ), false);
+                $this->paginate['AliasesPaper']['conditions']['AliasesPaper.alias_id'] = $aliasIds;
+                $this->set('papers', $this->paginate($this->Author->Alias->AliasesPaper));
+                $this->set('author', $author);
+        }
 
 	function admin_index() {
 		$this->Author->recursive = 0;

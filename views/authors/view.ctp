@@ -28,53 +28,51 @@
 	<h3><?php __('Related Papers');?></h3>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
-		<th><?php echo $paginator->sort('Techreport ID', 'tr-id'); ?></th>
-                <th><?php echo $paginator->sort('Title', 'title') ?></th>
-                <th><?php echo $paginator->sort('Published in', 'published_on') ?></th>
+		<th><?php echo $paginator->sort('Techreport ID', 'Paper.tr-id'); ?></th>
+                <th><?php echo $paginator->sort('Title', 'Paper.title') ?></th>
+                <th><?php echo $paginator->sort('Published in', 'Paper.published_on') ?></th>
                 <th>PDF</th>
                 <th>PS</th>
-                <th><?php echo $paginator->sort('Pages', 'pages') ?></th>
+                <th><?php echo $paginator->sort('Pages', 'Paper.pages') ?></th>
 	</tr>
 	<?php
 		$i = 0;
-                foreach ($author['Alias'] as $alias):
-                foreach ($alias['Paper'] as $paper):
+                foreach ($papers as $paper):
                         $class = null;
                         if ($i++ % 2 == 0) {
                                 $class = ' class="altrow"';
                         }
                 ?>
                 <tr>
-                <td><?php echo $html->link($paper['tr-id'],
+                <td><?php echo $html->link($paper['Paper']['tr-id'],
                 array('controller'=>'papers', 'action'=>'view',
-                $paper['tr-id'])); ?></td>
-                <td><?php echo $paper['title']; ?></td>
+                $paper['Paper']['tr-id'])); ?></td>
+                <td><?php echo $paper['Paper']['title']; ?></td>
                 <td>
                     <?php echo date('F Y',
-                    strtotime($paper['published_on'])); ?>
+                    strtotime($paper['Paper']['published_on'])); ?>
                 </td>
                 <td>
-                        <?php if ($paper['Pdf']) {
+                        <?php if ($paper['Paper']['Pdf']) {
                             echo $html->link('PDF',
-                                '/files/'.$paper['Pdf']['name']).'
-                                ('.round($paper['Pdf']['size'] / 1024).' KB)';
+                                '/files/'.$paper['Paper']['Pdf']['name']).'
+                                ('.round($paper['Paper']['Pdf']['size'] / 1024).' KB)';
                         } else {
                             echo "No PDF available";
                         } ?>
                 </td>
                 <td>
-                        <?php if ($paper['Ps']) {
+                        <?php if ($paper['Paper']['Ps']) {
                             echo $html->link('PS',
-                                '/files/'.$paper['Ps']['name']).'
-                                ('.round($paper['Ps']['size'] / 1024).' KB)';
+                                '/files/'.$paper['Paper']['Ps']['name']).'
+                                ('.round($paper['Paper']['Ps']['size'] / 1024).' KB)';
                         } else {
                             echo "No PS available";
                         } ?>
                 </td>
-                <td><?php echo $paper['pages'] ?></td>
+                <td><?php echo $paper['Paper']['pages'] ?></td>
                 </tr>
-        <?php endforeach;
-            endforeach; ?>
+        <?php endforeach; ?>
 
 	</table>
 <?php endif; ?>
