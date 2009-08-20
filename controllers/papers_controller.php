@@ -4,6 +4,7 @@ class PapersController extends AppController {
 	var $name = 'Papers';
 	var $helpers = array('Html', 'Form');
         var $components = array('FileUpload', 'Auth');
+        var $paginate = array('order' => array('tr-id', 'asc'));
         function beforeFilter() {
             $this->Auth->allow('index', 'by_year', 'view');
         }

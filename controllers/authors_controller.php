@@ -4,6 +4,7 @@ class AuthorsController extends AppController {
 	var $name = 'Authors';
 	var $helpers = array('Html', 'Form');
         var $components = array('Auth');
+        var $paginate = array('order' => array('last_name' => 'asc'));
 
         function beforeFilter() {
                 $this->Auth->allow('index', 'view');
