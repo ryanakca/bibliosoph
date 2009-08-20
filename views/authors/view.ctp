@@ -55,7 +55,7 @@
                 <td>
                         <?php if ($paper['Paper']['Pdf']) {
                             echo $html->link('PDF',
-                                '/files/'.$paper['Paper']['Pdf']['name']).'
+                                $html->webroot().'files/'.$paper['Paper']['Pdf']['name']).'
                                 ('.round($paper['Paper']['Pdf']['size'] / 1024).' KB)';
                         } else {
                             echo "No PDF available";
@@ -64,7 +64,7 @@
                 <td>
                         <?php if ($paper['Paper']['Ps']) {
                             echo $html->link('PS',
-                                '/files/'.$paper['Paper']['Ps']['name']).'
+                                $html->webroot().'files/'.$paper['Paper']['Ps']['name']).'
                                 ('.round($paper['Paper']['Ps']['size'] / 1024).' KB)';
                         } else {
                             echo "No PS available";
