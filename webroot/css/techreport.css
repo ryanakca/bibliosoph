@@ -100,8 +100,16 @@ ul, li {
 }
 #footer {
 	clear: both;
-	padding: 6px 10px;
-	text-align: right;
+	padding: 6px 10px 60px;
+	text-align: left;
+}
+#legal {
+        float: left;
+        color: #76797c;
+        font-size: 50%;
+        width: 40%;
+        padding-bottom: 20px;
+        display: block;
 }
 
 /* Tables */
