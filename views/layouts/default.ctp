@@ -13,6 +13,8 @@
 </div>
 <div id="content">
 <?php echo $content_for_layout ?>
+<?php echo $html->link('Back to home', array('controller' => 'pages',
+    'action'=>'index')); ?>
 </div>
 <div id="footer">
 <!-- Insert your footer here -->
