@@ -116,6 +116,10 @@ p {
         padding-bottom: 20px;
         display: block;
 }
+#legal p {
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
+}
 
 /* Tables */
 table {
