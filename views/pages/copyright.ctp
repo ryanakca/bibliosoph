@@ -18,6 +18,12 @@
     along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
 
     You may obtain Bibliosoph's source by running:
-        git clone <PATH>
+        git clone git://github.com/ryanakca/bibliosoph.git
+
+    The above git repository may not include the modifications made for this
+    Biblosoph installation. It is up to this network server's operator to
+    provide the source code of the modified version running on this network
+    server.
+
 </pre>
 </div>
