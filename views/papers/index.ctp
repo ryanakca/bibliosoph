@@ -33,7 +33,7 @@ foreach ($papers as $paper):
 		<td>
                         <?php if ($paper['Pdf']['name']) {
                             echo $html->link('PDF',
-                                $html->webroot().'files/'.$paper['Pdf']['name']).'
+                                $html->webroot.'files/'.$paper['Pdf']['name']).'
                                 ('.round($paper['Pdf']['size'] / 1024).' KB)';
                         } else {
                             echo "No PDF available";
@@ -42,7 +42,7 @@ foreach ($papers as $paper):
                 <td>
                         <?php if ($paper['Ps']['name']) {
                             echo $html->link('PS',
-                                $html->webroot().'files/'.$paper['Ps']['name']).'
+                                $html->webroot.'files/'.$paper['Ps']['name']).'
                                 ('.round($paper['Ps']['size'] / 1024).' KB)';
                         } else {
                             echo "No PS available";
