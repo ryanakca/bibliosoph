@@ -38,4 +38,5 @@
         Router::connect('/admin/', array('controller' => 'users', 'action'=>'login', 'admin'=>true));
         Router::connect('/admin/logout', array('controller'=> 'users', 'action'=>'logout', 'admin'=>true));
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+        Router::connect ('/admin/pages/*', array('controller'=>'pages', 'action'=>'display'));
 ?>
