@@ -13,7 +13,7 @@ class PapersController extends AppController {
 	function index() {
                 $this->pageTitle = 'Technical Reports';
 		$this->Paper->recursive = 1;
-		$this->set('papers', $this->paginate());
+		$this->set('papers', $this->paginate('Paper'));
 	}
 
         function by_year($year = null) {
