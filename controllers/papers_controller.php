@@ -4,7 +4,8 @@ class PapersController extends AppController {
 	var $name = 'Papers';
 	var $helpers = array('Html', 'Form');
         var $components = array('FileUpload', 'Auth');
-        var $paginate = array('order' => array('tr-id', 'asc'));
+        var $paginate = array('order' => array('Paper.tr-id' => 'asc'));
+
         function beforeFilter() {
             $this->Auth->allow('index', 'by_year', 'view');
         }
@@ -27,7 +28,7 @@ class PapersController extends AppController {
                 'order' => array('Paper.published_on' => 'asc'),
                 'contain' => array('Paper')
             );
-            $this->set('papers', $this->paginate());
+            $this->set('papers', $this->paginate('Paper'));
         }
 
         function view($tr_id = null) {
