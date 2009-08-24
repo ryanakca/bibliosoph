@@ -3,7 +3,6 @@ class UsersController extends AppController {
     var $name = 'Users';
     var $components = array('Auth');
     function beforeFilter() {
-        /*$this->Auth->allow('admin_register');*/
         $this->Auth->loginRedirect = array('action'=>'index', 'controller'=>'papers', 'admin'=>true);
         $this->Auth->logoutRedirect = array('action'=>'index', 'controller'=>'pages', 'admin'=>false);
     }
