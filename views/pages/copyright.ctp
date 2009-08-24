@@ -1,6 +1,6 @@
 <div class="pages">
 <h2>Copyright and Legal</h2>
-<p>The reports contained in these Internet-accessible directories are included by the contributing authors as a mechanism to ensure timely dissemination of scholarly and technical information on a non-commerical basis. <a href="http://www.faqs.org/faqs/law/copyright/faq/">Copyright</a> and all rights therein are maintained by the authors, despite their having offered this information electronically. Everyone copying this information must adhere to the terms and constraints invoked by each author's copyright.</p>
+<p>The reports contained in these Internet-accessible directories are included by the contributing authors as a mechanism to ensure timely dissemination of scholarly and technical information on a non-commercial basis. <a href="http://www.faqs.org/faqs/law/copyright/faq/">Copyright</a> and all rights therein are maintained by the authors, despite their having offered this information electronically. Everyone copying this information must adhere to the terms and constraints invoked by each author's copyright.</p>
 
 <p>Reports may not be copied for commercial redistribution, republication, or dissemination without the explicit permission of the <a href="http://cs.queensu.ca">School of Computing</a> at <a href="http://queensu.ca">Queen's University</a> and the authors.</p>
 <pre>
