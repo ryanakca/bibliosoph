@@ -16,6 +16,7 @@ echo $paginator->counter(array(
 	<th>PDF</th>
 	<th>PS</th>
         <th><?php echo $paginator->sort('pages');?></th>
+        <th><?php echo $paginator->sort('display');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -62,6 +63,12 @@ foreach ($papers as $paper):
                 </td>
                 <td>
                         <?php echo $paper['Paper']['pages']; ?>
+                </td>
+                        <?php if ($paper['Paper']['display'] == 1) {
+                            echo 'True';
+                        } else {
+                            echo 'False';
+                        } ?>
                 </td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $paper['Paper']['id'])); ?>
