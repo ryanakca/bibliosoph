@@ -108,6 +108,7 @@ CREATE TABLE `papers` (
   `pdf_id` int(11) default NULL,
   `ps_id` int(11) default NULL,
   `updated` datetime NOT NULL,
+  `display` bool default 1,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `tr-id` (`tr-id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
