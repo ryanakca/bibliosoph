@@ -8,7 +8,8 @@ class Paper extends AppModel {
                                 'message' => 'Please use a unique Techreport ID.'),
 		'title' => array('notempty'),
                 'pages' => array ('rule' => 'numeric',
-                                  'allowEmpty' => true)
+                                  'allowEmpty' => true),
+                'display' => array('rule' => 'boolean')
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

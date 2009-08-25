@@ -13,6 +13,7 @@ class PapersController extends AppController {
 	function index() {
                 $this->pageTitle = 'Technical Reports';
 		$this->Paper->recursive = 1;
+                $this->paginate['Paper']['conditions']['Paper.display'] = '1';
 		$this->set('papers', $this->paginate('Paper'));
 	}
 
@@ -24,7 +25,8 @@ class PapersController extends AppController {
             $this->pageTitle = 'Technical reports for the year ' . $year;
             $this->paginate = array(
                 'conditions' => array(
-                   'YEAR(Paper.published_on)' => $year),
+                    'YEAR(Paper.published_on)' => $year,
+                    'Paper.display' => '1'),
                 'order' => array('Paper.published_on' => 'asc'),
                 'contain' => array('Paper')
             );

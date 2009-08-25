@@ -11,6 +11,7 @@
                 echo $form->input('pages');
                 echo $form->input('Alias', array('type' => 'select', 'multiple'
                     => true, 'label' => 'Author(s)'));
+                echo $form->input('display');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
