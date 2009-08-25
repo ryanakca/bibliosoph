@@ -47,7 +47,12 @@
                             echo "No PS available";
                         } ?>
                         &nbsp;
+                </dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Pages'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $paper['Paper']['pages']; ?>
 			&nbsp;
+	                &nbsp;
 		</dd>
 	</dl>
 </div>
