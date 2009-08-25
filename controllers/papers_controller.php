@@ -25,7 +25,8 @@ class PapersController extends AppController {
             $this->pageTitle = 'Technical reports for the year ' . $year;
             $this->paginate = array(
                 'conditions' => array(
-                   'YEAR(Paper.published_on)' => $year),
+                    'YEAR(Paper.published_on)' => $year,
+                    'Paper.display' => '1'),
                 'order' => array('Paper.published_on' => 'asc'),
                 'contain' => array('Paper')
             );
