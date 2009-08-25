@@ -52,6 +52,15 @@
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $paper['Paper']['pages']; ?>
 			&nbsp;
+                </dd>
+                <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Displayed'); ?></dt>
+                <dd<?php if ($i++ % 2 == 0) echo $class;?>>
+                        <?php if ($paper['Paper']['display'] == 1) {
+                            echo "True";
+                        } else {
+                            echo "False";
+                        } ?>
+			&nbsp;
 	                &nbsp;
 		</dd>
 	</dl>
