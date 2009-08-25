@@ -13,6 +13,7 @@ class PapersController extends AppController {
 	function index() {
                 $this->pageTitle = 'Technical Reports';
 		$this->Paper->recursive = 1;
+                $this->paginate['Paper']['conditions']['Paper.display'] = '1';
 		$this->set('papers', $this->paginate('Paper'));
 	}
 
