@@ -34,6 +34,7 @@ class AuthorsController extends AppController {
                     )
                 ), false);
                 $this->paginate['AliasesPaper']['conditions']['AliasesPaper.alias_id'] = $aliasIds;
+                $this->paginate['AliasesPaper']['conditions']['Paper.display'] = 1;
                 $this->set('papers', $this->paginate($this->Author->Alias->AliasesPaper));
                 $this->set('author', $author);
         }
