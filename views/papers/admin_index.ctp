@@ -15,6 +15,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('updated');?></th>
 	<th>PDF</th>
 	<th>PS</th>
+        <th><?php echo $paginator->sort('pages');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -58,6 +59,9 @@ foreach ($papers as $paper):
                         } else {
                             echo "No PS available";
                         } ?>
+                </td>
+                <td>
+                        <?php echo $paper['Paper']['pages']; ?>
                 </td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $paper['Paper']['id'])); ?>
