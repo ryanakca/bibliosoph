@@ -32,6 +32,18 @@
 
 <p>To obtain the latest modifications to the source code hosted on this server, run:</p>
 <pre>
-    git clone <?php if ($_SERVER['SERVER_PORT'] == '80') { echo 'http://'; } else { echo 'https://'; } echo $_SERVER['HTTP_HOST'] . $html->webroot . '.git/'; ?>
+<?php
+    $url = "http";
+    if (array_key_exists("HTTPS", $_SERVER)) {
+        $url .= "s";
+    }
+    $url .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") {
+        $url .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+    } else {
+        $url .= $_SERVER["SERVER_NAME"];
+    }
+?>
+    git clone <?php echo $url . $html->webroot . '.git/'; ?>
 </pre>
 </div>
