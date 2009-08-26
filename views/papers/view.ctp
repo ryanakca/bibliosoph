@@ -53,5 +53,49 @@
                         <?php endforeach; ?>
                     </ul>
                 </dd>
+                <dt<?php if ($i % 2 == 0) echo $class; ?>><?php __('BibTex entry'); ?></dt>
+                <dd>
+                <pre class="bibtex">
+<?php $authors = "";
+    foreach ($paper['Alias'] as $alias):
+        if ($alias != end($paper['Alias'])) {
+            $authors .= $alias['name'] . " and ";
+        } else {
+            $authors .= $alias['name'];
+        }
+    endforeach;
+
+    $url = "http";
+    if (array_key_exists("HTTPS", $_SERVER)) {
+        $url .= "s";
+    }
+    $url .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") {
+        $url .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+    } else {
+        $url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    }
+    if ($paper['Paper']['pages'] != 0) {
+        $pages = $paper['Paper']['pages'];
+    } else {
+        $pages = '';
+    }
+
+echo '' .
+"@TECHREPORT{" . $paper['Paper']['tr-id'] . ',
+    author = "' . $authors . '",
+    title = {' . $paper['Paper']['title'] . '},
+    number = {' . $paper['Paper']['tr-id'] . '},
+    institution = {' . Configure::read('BibliosophSettings.Institution') . '},
+    address = {' . Configure::read('BibliosophSettings.Address') . '},
+    month = "' . date('F', strtotime($paper['Paper']['published_on'])) . '",
+    year = "' . date('Y', strtotime($paper['Paper']['published_on'])) . '",
+    pages = {' . $pages . '},
+    url = "' . $url . '"
+}';
+
+?>
+                </pre>
+                </dd>
 	</dl>
 </div>

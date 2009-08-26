@@ -10,11 +10,9 @@
 <div id="header">
 <h1 id="institution">
 <img src="http://research.cs.queensu.ca/TechReports/QL.gif" height="129"
-width="102" alt="Queen's Crest" style="vertical-align: middle;" /><a href="http://www.cs.queensu.ca/">School of Computing</a>,
-<a href="http://www.queensu.ca">Queen's University</a></h1>
+width="102" alt="Queen's Crest" style="vertical-align: middle;" /><?php echo Configure::read('BibliosophSettings.Institution'); ?></h1>
 <p><strong>NOTE:</strong>
 Please read this <?php echo $html->link('copyright notice', array('controller' => 'pages', 'action' => 'copyright')); ?> before viewing or retrieving files.
-
 <!-- Insert your header here -->
 </div>
 <div id="content">
