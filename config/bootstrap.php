@@ -41,4 +41,7 @@
  *
  */
 //EOF
+
+Configure::load('bibliosoph-config');
+
 ?>
