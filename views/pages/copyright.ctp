@@ -25,5 +25,12 @@
     provide the source code of the modified version running on this network
     server.
 
+    Bibliosoph also contains code which is
+    Copyright &copy; 2005&ndash;2009 <a href="http://www.cakefoundation.org">Cake Software Foundation, Inc.</a> and
+    Copyright &copy; 2009 <a href="http://projects.webtechnick.com/file_upload/">Nick Baker</a>. Both Nick Baker's code and the CakePHP
+    code are distributed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>. The papers list on each
+    author's page was contributed by <a href="http://www.mark-story.com">Mark Story</a> and can redistributed and
+    used for any purpose, without condition. It was then modified and
+    expanded by Ryan Kavanagh.
 </pre>
 </div>
