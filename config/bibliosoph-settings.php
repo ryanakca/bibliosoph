@@ -7,6 +7,7 @@
 
 $config['BibliosophSettings'] = array(
     'Institution' => 'YOUR INSTITUTION NAME',
+    'TexifiedInstitution' => 'YOUR INSTITUTION NAME',
     'Address' => 'City, Province, Country',
 );
 ?>
