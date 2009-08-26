@@ -1,0 +1,233 @@
+\input texinfo   @c -*-texinfo-*-
+@setfilename bibliosoph.info
+@settitle Bibliosoph
+@syncodeindex pg cp
+@comment Commented out allowcodebreaks because it breaks on older versions of
+@comment texi2pdf and there aren't any differences in output with or without it.
+@comment @allowcodebreaks false
+@set VERSION UNRELEASED
+@set UPDATED 26 August 2009
+@set UPDATED-MONTH August 2009
+@comment %**end of header
+@copying
+This manual is for Bibliosoph (version @value{VERSION}, @value{UPDATED}).
+
+Copyright @copyright{} 2009 Ryan Kavanagh (@email{ryanakca@@kubuntu.org}).
+
+@quotation
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+@end quotation
+@end copying
+
+@dircategory Bibliosoph Technical Reports Manager
+@direntry
+* Bibliosoph:: Bibliosoph
+@end direntry
+
+@titlepage
+@title Bibliosoph
+@subtitle Technical Reports Manager
+@subtitle Version @value{VERSION}, @value{UPDATED-MONTH}
+@author Ryan Kavanagh (@email{ryanakca@@kubuntu.org})
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top, Introduction to Bibliosoph, (dir), (dir)
+@top Turnin-NG
+@ifinfo
+This manual is for @code{Bibliosoph} (version @value{VERSION}, @value{UPDATED}).
+@end ifinfo
+@end ifnottex
+
+@ifhtml
+@insertcopying
+@end ifhtml
+
+@menu
+* Introduction to Bibliosoph::
+* Installing Bibliosoph::
+* Administering Bibliosoph::
+* Distributing Bibliosoph::
+@end menu
+
+@node Introduction to Bibliosoph, Installing Bibliosoph, Top, Top
+@comment node-name, next, previous, up
+@chapter Introduction to Bibliosoph
+
+Bibliosoph is a free and open-source technical reports manager powered by the
+powerful @uref{http://cakephp.org, CakePHP framework}. It's main features allow
+grouping of papers written by the same authors under various aliases (ex: Smith,
+John E. writes papers under the names "John Edwin Smith", "Smith, J." and "J. E.
+Smith"), easy upload of the technical reports in PDF and PS format, the
+generation of BibTeX entries, sorting of papers, authors and aliases according
+to various criterion and a password protected admin interface.
+
+@node Installing Bibliosoph, Administering Bibliosoph, Introduction to Biblosoph, Top
+@chapter Installing Bibliosoph
+
+To install Bibliosoph, you'll need to have a SQL server supported by CakePHP
+(Bibliosoph has only been tested on MySQL, your mileage may vary with other
+servers), a webserver with PHP support such as Apache and CakePHP installed.
+
+@menu
+* Installing CakePHP::
+* Installing and configuring Bibliosoph::
+@end menu
+
+@node Installing CakePHP, Installing and configuring Bibliosoph, , Installing Bibliosoph
+@section Installing CakePHP
+
+This installation will have Bibliosoph serve techreports from
+@file{http://www.domain.tld/}. Start by downloading CakePHP from their
+@uref{http://cakephp.org, website}. At the time of this writing, the latest
+CakePHP version is 1.2.8.8284. 
+
+@smallexample
+www-data@@www:/var/www$ wget --quiet -O cake_1.2.4.8284.tar.bz2 \
+ http://cakeforge.org/frs/download.php/724/cake_1.2.4.8284.tar.bz2/donation=complete
+www-data@@www:/var/www$ tar jxf cake_1.2.4.8284.tar.bz2
+www-data@@www:/var/www$ mv cake_1.2.4.8284/ cake
+@end smallexample
+
+See the CakePHP documentation for various other installation methods.
+
+@node Installing and configuring Bibliosoph, , Installing CakePHP, Installing Bibliosoph
+@section Installing and configuring Biblisoph
+
+Download the Bibliosoph source code. You may do this by downloading the latest
+stable tarball from the Bibliosoph's web page on Github
+(@uref{http://github.com/ryanakca/Bibliosoph/tree/master}) or if you're feeling
+adventurous, you can get the latest development code by running @command{git
+clone git://github.com/ryanakca/bibliosoph.git}.
+
+The downloaded directory needs to be renamed to
+@file{/var/www/cake/bibliosoph/}.
+
+@smallexample
+www-data@@www:/var/www$ cd cake
+www-data@@www:/var/www/cake$ git clone git://github.com/ryanakca/bibliosoph.git
+Initialized empty Git repository in /var/www/cake/bibliosoph/.git/
+remote: Counting objects: 676, done.
+remote: Compressing objects: 100% (306/306), done.
+remote: Total 676 (delta 450), reused 524 (delta 351)
+Receiving objects: 100% (676/676), 105.22 KiB, done.
+www-data@@www:/var/www/cake$ cd  bibliosoph
+www-data@@www:/var/www/cake/bibliosoph$
+@end smallexample
+
+You will now need to create the database tell bibliosoph about it. Create a user
+and a database and create the tables using the 'create_database.sql' file.
+
+@smallexample
+www-data@@www:/var/www/cake/bibliosoph$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 58
+Server version: 5.1.37-1ubuntu2 (Ubuntu)
+
+Type `help;' or `\h' for help. Type `\c' to clear the current input statement.
+
+mysql> create database bibliosoph;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> GRANT ALL ON bibliosoph.* TO 'bibliosoph'@@'localhost'
+    -> IDENTIFIED BY 'bibliosoph_password';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> quit
+Bye
+www-data@@www:/var/www/cake/bibliosoph$ mysql -u bibliosoph -p bibliosoph \
+ create_database.sql
+Enter password: (Enter the database password here)
+www-data@@www:/var/www/cake/bibliosoph$ cp config/database.php.default \
+ c\onfig/database.php
+@end smallexample
+
+Now fill in the @var{$default} array in @file{config/database.php} with your
+database information.
+
+You now need to set your webserver's document root to Bibliosoph's webroot,
+@file{/var/www/cake/bibliosoph/webroot} in this installation. For Apache, look
+for a line that starts with @code{DocumentRoot} in your configurations. You also
+need to enable mod_rewrite. If using Apache, you can do this by running
+@command{a2enmond rewrite}. Restart your webserver.
+
+Set the variables in @file{config/bibliosoph-settings.php}. They include your
+institution name and your address. These variables will be used to generate the
+BibTeX entries and will be used as part of the theme.
+
+Finally, you will need to create an administrative user to manage the site. You
+may do this by using @uref{http://springenwerk.com/, Johannes Fahrenkrug's}
+create_user CakePHP shell script.
+
+@smallexample
+www-data@@www:/var/www/cake/bibliosoph$ ../cake/console/cake \
+ -app /var/www/cake/bibliosoph create_user
+App : bibliosoph
+Path: /var/www/cake/bibliosoph
+---------------------------------------------------------------
+Create Admin User:
+---------------------------------------------------------------
+Username:
+> webmaster
+Password:
+> webmaster
+Password Confirmation:
+> webmaster
+Admin User created successfully!
+@end smallexample
+
+@node Administering Bibliosoph, Distributing Bibliosoph, , Top
+@chapter Administering Bibliosoph
+
+
+
+
+@node Distributing Bibliosoph, , Administering Bibliosoph, Top
+@chapter Distributing Bibliosoph
+
+Bibliosoph is Copyright @copyright{} 2009 Ryan Kavanagh
+(@email{ryanakca@@kubuntu.org}). It is licensed under the terms of the GNU
+Affero General Public License version 3, or (at your option) any later version.
+
+The files @file{controllers/component/file_upload.php} and
+@file{views/helpers/file_upload.php} are Copyright @copyright{} 2009 Nick Baker
+and are licensed under the MIT License.
+
+All content that was distributed in the cake.app subpackage is Copyright
+@copyright{} 2005-2009 @uref{http://www.cakefoundation.org, Cake Software
+Foundation Inc.}, and is distributed under the MIT License.
+
+The `view' action in the Author controller was written by
+@uref{http://mark-story.com, Mark Story} and can distributed and used for any
+purpose, without condition. It was then modified and expanded by Ryan Kavanagh.
+
+@menu
+* GNU Affero General Public License version 3::
+* MIT License::
+@end menu
+
+@node GNU Affero General Public License version 3, MIT License, , Distributing Bibliosoph
+@section GNU Affero General Public License version 3
+
+@include agpl-3.0.texi
+
+@node MIT License, , GNU Affero General Public License version 3, Distributing Bibliosoph
+@section MIT License
+
+@include mit.texi
+
+@comment @node Index
+@comment @unnumbered Index
+
+@comment @printindex cp
+
+
+@bye
