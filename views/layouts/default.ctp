@@ -8,7 +8,7 @@
 </head>
 <body>
 <div id="header">
-<h1 id="institution">YOUR INSTITUTION NAME</h1>
+<h1 id="institution"><?php echo Configure::read('BibliosophSettings.Institution'); ?></h1>
 <!-- Insert your header here -->
 </div>
 <div id="content">
