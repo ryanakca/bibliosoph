@@ -23,12 +23,17 @@
 require 'webroot' . DIRECTORY_SEPARATOR . 'index.php';
 ?>
 
-The files controllers/component/file_upload.php and
-views/helpers/file_upload.php are Copyright 2009 Webtechnick and are licensed
-under the MIT License.
+All content that was distributed in the cake.app subpackage is Copyright
+2005-2009, Cake Software Foundation, Inc. (http://www.cakefoundation.org), and
+is distributed under the MIT License, see above.
 
-The 'view' action in the Author controller was written by Mark Story and is
-distributed with his permission.
+The files controllers/component/file_upload.php and
+views/helpers/file_upload.php are Copyright 2009 Nick Baker and are licensed
+under the MIT License (http://www.opensource.org/licenses/mit-license.php).
+
+The 'view' action in the Author controller was written by Mark Story and can
+distributed and used for any purpose, without condition. It was then modified
+and expanded by Ryan Kavanagh.
 
 All other changes are Copyright 2009 Ryan Kavanagh and are licensed under the
 GNU Affero General Public License version 3, or (at your option) any later
