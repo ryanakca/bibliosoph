@@ -86,7 +86,7 @@ echo '' .
     author = "' . $authors . '",
     title = {' . $paper['Paper']['title'] . '},
     number = {' . $paper['Paper']['tr-id'] . '},
-    institution = {' . Configure::read('BibliosophSettings.Institution') . '},
+    institution = {' . Configure::read('BibliosophSettings.TexifiedInstitution') . '},
     address = {' . Configure::read('BibliosophSettings.Address') . '},
     month = "' . date('F', strtotime($paper['Paper']['published_on'])) . '",
     year = "' . date('Y', strtotime($paper['Paper']['published_on'])) . '",
