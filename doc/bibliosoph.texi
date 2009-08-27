@@ -54,6 +54,7 @@ This manual is for @code{Bibliosoph} (version @value{VERSION}, @value{UPDATED}).
 * Introduction to Bibliosoph::
 * Installing Bibliosoph::
 * Administering Bibliosoph::
+* Hacking on Bibliosoph::
 * Distributing Bibliosoph::
 @end menu
 
@@ -184,13 +185,16 @@ Password Confirmation:
 Admin User created successfully!
 @end smallexample
 
-@node Administering Bibliosoph, Distributing Bibliosoph, , Top
+@node Administering Bibliosoph, Hacking on Bibliosoph, Installing Bibliosoph, Top
 @chapter Administering Bibliosoph
 
 
 
+@node Hacking on Bibliosoph, Distributing Bibliosoph, Administering Bibliosoph, Top
+@chapter Hacking on Bibliosoph
 
-@node Distributing Bibliosoph, , Administering Bibliosoph, Top
+
+@node Distributing Bibliosoph, , Hacking on Bibliosoph, Top
 @chapter Distributing Bibliosoph
 
 Bibliosoph is Copyright @copyright{} 2009 Ryan Kavanagh
