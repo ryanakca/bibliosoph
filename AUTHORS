@@ -35,6 +35,11 @@ The 'view' action in the Author controller was written by Mark Story and can
 distributed and used for any purpose, without condition. It was then modified
 and expanded by Ryan Kavanagh.
 
+The create_user shell (vendors/shells/create_user.php) was written by Johannes
+Fahrenkrug and is distributed with his permission ("Sure, just go ahead and use
+it in whatever way you want :)"). It was downloaded from
+http://bakery.cakephp.org/articles/view/creating-a-custom-shell-for-adding-users-for-use-with-authcomponent
+
 All other changes are Copyright 2009 Ryan Kavanagh and are licensed under the
 GNU Affero General Public License version 3, or (at your option) any later
 version.

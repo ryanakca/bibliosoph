@@ -31,6 +31,9 @@
     code are distributed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>. The papers list on each
     author's page was contributed by <a href="http://www.mark-story.com">Mark Story</a> and can redistributed and
     used for any purpose, without condition. It was then modified and
-    expanded by Ryan Kavanagh.
+    expanded by Ryan Kavanagh. The create_user shell was written by
+    Johannes Fahrenkrug and downloaded from
+    <a href="http://bakery.cakephp.org/articles/view/creating-a-custom-shell-for-adding-users-for-use-with-authcomponent">Creating a Custom Shell for Adding Users for Use With AuthComponent</a>.
+    According to the author, it can be used in whichever way one wishes.
 </pre>
 </div>
