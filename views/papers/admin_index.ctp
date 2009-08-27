@@ -64,6 +64,7 @@ foreach ($papers as $paper):
                 <td>
                         <?php echo $paper['Paper']['pages']; ?>
                 </td>
+                <td>
                         <?php if ($paper['Paper']['display'] == 1) {
                             echo 'True';
                         } else {
