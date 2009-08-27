@@ -58,6 +58,8 @@ This manual is for @code{Bibliosoph} (version @value{VERSION}, @value{UPDATED}).
 * Distributing Bibliosoph::
 @end menu
 
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* c@
+
 @node Introduction to Bibliosoph, Installing Bibliosoph, Top, Top
 @comment node-name, next, previous, up
 @chapter Introduction to Bibliosoph
@@ -70,6 +72,8 @@ Smith"), easy upload of the technical reports in PDF and PS format, the
 generation of BibTeX entries, sorting of papers, authors and aliases according
 to various criterion and a password protected admin interface.
 
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* c@
+
 @node Installing Bibliosoph, Administering Bibliosoph, Introduction to Biblosoph, Top
 @chapter Installing Bibliosoph
 
@@ -81,6 +85,8 @@ servers), a webserver with PHP support such as Apache and CakePHP installed.
 * Installing CakePHP::
 * Installing and configuring Bibliosoph::
 @end menu
+
+@c ------------------------------- SECTION ------------------------------- c@
 
 @node Installing CakePHP, Installing and configuring Bibliosoph, , Installing Bibliosoph
 @section Installing CakePHP
@@ -98,6 +104,8 @@ www-data@@www:/var/www$ mv cake_1.2.4.8284/ cake
 @end smallexample
 
 See the CakePHP documentation for various other installation methods.
+
+@c ------------------------------- SECTION ------------------------------- c@
 
 @node Installing and configuring Bibliosoph, , Installing CakePHP, Installing Bibliosoph
 @section Installing and configuring Biblisoph
@@ -154,6 +162,12 @@ www-data@@www:/var/www/cake/bibliosoph$ cp config/database.php.default \
 Now fill in the @var{$default} array in @file{config/database.php} with your
 database information.
 
+You also need to copy @file{config/core.php.default} to @file{config/core.php}.
+Modify the settings to your liking and ensure that you change the value of
+@code{Security.salt} on the @code{Configure::write('Security.salt', '....');}
+line to something random and different from the default. This value will be the
+salt used when hashing passwords when adding and removing users.
+
 You now need to set your webserver's document root to Bibliosoph's webroot,
 @file{/var/www/cake/bibliosoph/webroot} in this installation. For Apache, look
 for a line that starts with @code{DocumentRoot} in your configurations. You also
@@ -166,7 +180,8 @@ BibTeX entries and will be used as part of the theme.
 
 Finally, you will need to create an administrative user to manage the site. You
 may do this by using @uref{http://springenwerk.com/, Johannes Fahrenkrug's}
-create_user CakePHP shell script.
+create_user CakePHP shell script. There is no default user to ensure that nobody
+compromises a partially configured site.
 
 @smallexample
 www-data@@www:/var/www/cake/bibliosoph$ ../cake/console/cake \
@@ -185,14 +200,133 @@ Password Confirmation:
 Admin User created successfully!
 @end smallexample
 
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= c@
+
 @node Administering Bibliosoph, Hacking on Bibliosoph, Installing Bibliosoph, Top
 @chapter Administering Bibliosoph
 
+The Bibliosoph administration panel aims to make adding, editing and removing
+authors, aliases, papers, uploads and users as easy as possible. This chapter
+will discuss the general layout of the administrative interface, general work
+flow and go into further detail of each panel of the admin interface. However,
+first a few definitions are in place.
 
+@deftp Model Author Aliases, first name, initial, last name, homepage, email
+An @code{Author} is a model that represents a group of @code{Aliases} along with
+information regarding the @code{Author}, such as the author's @var{first name},
+@var{initial}, @var{last name}, @var{homepage} and @var{email}. An @code{Author}
+may have multiple @code{Aliases}.
+@end deftp
+
+@deftp Model Alias Author, Papers, name
+An @code{Alias} is a model that represents an @code{Author} as they appear on
+the technical report and can be associated with multiple @code{Paper} objects.
+It is for this reason that an @code{Alias} only has a @var{name} field instead
+of @var{last name}, @var{first name} and @var{initial} since some authors may
+submit a paper under ``John E. Smith'' once,  ``Smith, John'' another time and
+then finally under ``John Edwin Smith''. The layout of the name is important
+when citing.
+@end deftp
+
+@deftp Model Paper Aliases, Pdf, Ps, tr-id, title, published on, pages, display
+A @code{Paper} is a technical report associated with at least on @code{Alias}
+and possibly with an @code{Upload}. Each @code{Paper} has a unique
+@acronym{@var{tr-id}, Technical Report ID}, a @var{title}, the date that it was
+@var{published on}, a number of @var{pages}, and a boolean @var{display} field
+which lets Bibliosoph know wether or not to publicly display the technical
+report.
+@end deftp
+
+@deftp Model Upload Paper, name, type, size
+An @code{Upload} is an uploaded file, either in @acronym{PDF, Portable Document
+Format} or in @acronym{PS, PostScript} format associated to a @code{Paper}. This
+file gets uploaded to @file{/files/} on the webserver, or @file{webroot/files/}
+in the Bibliosoph source. The @var{name} is the file name, it gets automatically
+renamed to the @code{Paper}'s @var{tr-id} while keeping it's original suffix.
+@end deftp
+
+@deftp Model User username, password
+A @code{User} is a user with full access to the administrative interface. This
+user is identified by a @var{username} and a @var{password}. The password is
+prefixed by the value of @code{Security.salt} in @file{config/core.php} and
+their @code{SHA-1 hash} is calculated and stored in the database.
+@end deftp
+
+@menu
+* Administrative Interface Layout::
+@end menu
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Administrative Interface Layout, Authors, , Administering Bibliosoph
+@section Administrative Interface Layout
+
+The administrative interface is divided into five main views:
+
+@menu
+* Model Index::
+* Add::
+* Edit::
+* View::
+* Delete::
+@end menu
+
+@node Model Index, , , Administrative Interface Layout
+@subsection Model Index
+
+The model index allows you to quickly browse through the available entries for
+each model. Clicking on a column's headers on the table will often allow you to
+sort entries in ascending order. Clicking the same header will sort the entries
+in decreasing order. Each row also has links to @code{Action} items, allowing
+you to @code{Edit}, @code{View} or @code{Delete} an entry. Not all of the action
+entries are available for each model. There are also links to the other models
+from the bottom of the model index.
+
+@node Add, Edit, Model Index, Administrative Interface Layout
+@subsection Add
+
+Adding a new entry to a model is done by selecting the @code{New <MODEL>} link at
+the bottom of the model's index page. The administrator will be brought to a
+page with a form, where required fields are in bold.
+
+@node Edit, View, Add, Administrative Interface Layout
+@subsection Edit
+
+Editing an entry is done by selecting the @code{Edit} action item from model
+entry's @code{View} page or from the model entry's row on the @code{Model
+Index} page. The page will be identical to the model's @code{Add} except that
+the fields will be prepopulated with the current values.
+
+@node View, Delete, Edit, Administrative Interface Layout
+@subsection View
+
+Viewing an entry is done by selecting the @code{View} action item from the model
+entry's row on the @code{Model Index} page. From here, the administrator may
+view information that might not be displayed on the @code{Model Index} page due
+to space constraints. The @code{View} page also allows the administrator to view
+models that this entry is associated with, for example, on an @code{Author}'s
+@code{View} page, the administrator may view associated @code{Aliases}.
+
+@node Delete, , View, Administrative Interface Layout
+@subsection Delete
+
+Deleting an entry is done by selecting the @code{Delete} action item from the
+model entry's row on the @code{Model Index} page, from its @code{View} page or
+even from its @code{Edit} page. The administrator will be prompted with a dialog
+box, asking if they really want to delete the model entry, and if the accept,
+the model entry will be permanently deleted.
+
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= c@
 
 @node Hacking on Bibliosoph, Distributing Bibliosoph, Administering Bibliosoph, Top
 @chapter Hacking on Bibliosoph
 
+A basic knowledge of PHP is required to be able to hack on Bibliosoph. A general
+knowledge of the CakePHP is also useful. CakePHP has extensive documentation
+available on their @uref{http://www.cakephp.org, website}. One must also be
+familiar with the @acronym{MVC, Model-View-Controller} architectural pattern.
+
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= c@
 
 @node Distributing Bibliosoph, , Hacking on Bibliosoph, Top
 @chapter Distributing Bibliosoph
