@@ -56,7 +56,7 @@ This manual is for @code{Bibliosoph} (version @value{VERSION}, @value{UPDATED}).
 * Administering Bibliosoph::
 * Hacking on Bibliosoph::
 * Distributing Bibliosoph::
-* Index::
+* Indices::
 @end menu
 
 @c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* c@
@@ -136,7 +136,8 @@ www-data@@www:/var/www/cake$ cd  bibliosoph
 www-data@@www:/var/www/cake/bibliosoph$
 @end smallexample
 
-@cindex Bibliosoph, database
+@cindex Bibliosoph, database creation
+@cindex Creation, Bibliosoph database
 You will now need to create the database tell bibliosoph about it. Create a user
 and a database and create the tables using the 'create_database.sql' file.
 
@@ -171,6 +172,12 @@ www-data@@www:/var/www/cake/bibliosoph$ cp config/database.php.default \
 Now fill in the @var{$default} array in @file{config/database.php} with your
 database information.
 
+@cindex @file{config/core.php.default}
+@cindex @file{config/core.php}
+@vindex @var{Security.salt}
+@cindex Salt
+@cindex Password, hash
+@cindex Hash, salt
 You also need to copy @file{config/core.php.default} to @file{config/core.php}.
 Modify the settings to your liking and ensure that you change the value of
 @code{Security.salt} on the @code{Configure::write('Security.salt', '....');}
@@ -187,6 +194,10 @@ Set the variables in @file{config/bibliosoph-settings.php}. They include your
 institution name and your address. These variables will be used to generate the
 BibTeX entries and will be used as part of the theme.
 
+@cindex User, creation
+@cindex Creating a user
+@cindex create_user
+@cindex Shell script, create_user
 Finally, you will need to create an administrative user to manage the site. You
 may do this by using @uref{http://springenwerk.com/, Johannes Fahrenkrug's}
 create_user CakePHP shell script. There is no default user to ensure that nobody
@@ -293,6 +304,9 @@ The administrative interface is divided into five main views:
 @node Model Index, Add, , Administrative Interface Layout
 @subsection Model Index
 
+@cindex Model Index
+@cindex Sorting
+
 The model index allows you to quickly browse through the available entries for
 each model. Clicking on a column's headers on the table will often allow you to
 sort entries in ascending order. Clicking the same header will sort the entries
@@ -304,12 +318,17 @@ from the bottom of the model index.
 @node Add, Edit, Model Index, Administrative Interface Layout
 @subsection Add
 
+@cindex Adding, a model entry
+@cindex Creating, a model entry
+@cindex New <MODEL>
 Adding a new entry to a model is done by selecting the @code{New <MODEL>} link at
 the bottom of the model's index page. The administrator will be brought to a
 page with a form, where required fields are in bold.
 
 @node Edit, View, Add, Administrative Interface Layout
 @subsection Edit
+
+@cindex Editing, a model entry
 
 Editing an entry is done by selecting the @code{Edit} action item from model
 entry's @code{View} page or from the model entry's row on the @code{Model
@@ -319,6 +338,9 @@ the fields will be prepopulated with the current values.
 @node View, Delete, Edit, Administrative Interface Layout
 @subsection View
 
+@cindex Model, detail
+@cindex Model, associations
+@cindex Viewing, a model entry
 Viewing an entry is done by selecting the @code{View} action item from the model
 entry's row on the @code{Model Index} page. From here, the administrator may
 view information that might not be displayed on the @code{Model Index} page due
@@ -328,6 +350,13 @@ models that this entry is associated with, for example, on an @code{Author}'s
 
 @node Delete, , View, Administrative Interface Layout
 @subsection Delete
+
+@cindex Model, deleting
+@cindex Deleting, a model entry
+@cindex Dialog, deleting
+@cindex Deleting, Dialog
+@cindex Permanent, deleting
+@cindex Deleting, permanent
 
 Deleting an entry is done by selecting the @code{Delete} action item from the
 model entry's row on the @code{Model Index} page, from its @code{View} page or
@@ -340,6 +369,9 @@ the model entry will be permanently deleted.
 @node Hacking on Bibliosoph, Distributing Bibliosoph, Administering Bibliosoph, Top
 @chapter Hacking on Bibliosoph
 
+@cindex MVC
+@cindex Model-View-Controller
+@cindex Architectural pattern
 A basic knowledge of PHP is required to be able to hack on Bibliosoph. A general
 knowledge of the CakePHP is also useful. CakePHP has extensive documentation
 available on their @uref{http://www.cakephp.org, website}. One must also be
@@ -359,6 +391,10 @@ widely documented on the Internet.
 @node Models, Views, , Hacking on Bibliosoph
 @section Models
 
+@cindex Model, list
+@cindex Model, what they represent
+@cindex Model, definition
+@cindex Bibliosoph, models used
 Models represent data. The @code{Author} model represents an Author, the
 @code{Paper} model represents a Paper, etc. Bibliosoph has the following models:
 
@@ -372,9 +408,14 @@ Models represent data. The @code{Author} model represents an Author, the
 @item @code{User}
 @end itemize
 
+@cindex Pdf, alias for Upload
+@cindex Ps, alias for Upload
 The @code{Pdf} and @code{Ps} options are aliases for the Upload model.
 @xref{Administering Bibliosoph}, for more details on each model.
 
+@cindex Model, modifying
+@cindex Model, validation rules
+@cindex Validation, models
 To modify a model, edit the respective file in the @file{models/} directory
 (ex, to modify the @code{Author} model, edit the file
 @file{models/author.php}). These files also contain the validation rules for
@@ -385,10 +426,22 @@ each model.
 @node Views, Controllers, Models, Hacking on Bibliosoph
 @section Views
 
+@cindex Views, definition
+@cindex Views, modify layout
+@cindex Modify, layout
+@cindex Layout, modify
+@cindex Views, HTML
+@cindex Views, PHP
 Views are the interface the user sees. Here you can modify the layout of a
 particular page and change how the data the controller passes to it is
 displayed. It is generally a combination of HTML and PHP code.
 
+@cindex Views, file organization
+@cindex File organization, views
+@cindex Organization, views files
+@cindex Administrative views, prefix
+@cindex Prefix, administrative views
+@cindex Views, administrative prefix
 CakePHP views are organized under the @file{views/} directory in the following
 layout @file{views/model_name/view_name.ctp}. Views for the administrative
 interface are prefixed with @file{admin_}.
@@ -398,12 +451,19 @@ interface are prefixed with @file{admin_}.
 @node Controllers, Layout and appearance, Views, Hacking on Bibliosoph
 @section Controllers
 
+@cindex Controller, definition
+@cindex Controller, input
+@cindex Controller, display
 Controllers manage the logic for a single model. They often take data from the
 user and return it to be displayed in a view.
 
-CakePHP views are organized under the @file{views/} directory in the following
-layout @file{controllers/model_controller.php}. Function names match the view
-name.
+@cindex Controllers, file organization
+@cindex File organization, controllers
+@cindex Organization, controllers files
+@cindex Controllers, list of
+CakePHP controllers are organized under the @file{controllers/} directory in
+the following layout @file{controllers/model_controller.php}. Function names
+match the view name.
 
 @menu
 * Aliases::
@@ -614,7 +674,7 @@ Deletes the @code{Paper} with the id @var{id}.
 @node Uploads, Users, Papers, Controllers
 @subsection Uploads
 
-@defcv Controller AppController UpdloadsController
+@defcv Controller AppController UploadsController
 @defvar name
 The controller's name.
 @end defvar
@@ -718,6 +778,21 @@ Deletes the @code{Paper} with the id @var{id}.
 @node Layout and appearance, Your responsibilities under the AGPL, Controllers, Hacking on Bibliosoph
 @section Layout and appearance
 
+@cindex Layout, global
+@cindex Global layout
+@cindex @file{views/layouts/default.ctp}
+@cindex Layout, appearance
+@cindex Global appearance
+@cindex CSS
+@cindex JS
+@cindex Javascript
+@cindex Images
+@cindex File organization, CSS
+@cindex File organization, Javascript
+@cindex File organization, Images
+@cindex Organization, CSS files
+@cindex Organization, Javascript files
+@cindex Organization, Image files
 The file @file{views/layouts/default.ctp} contains the layout for the whole
 site. The @acronym{CSS, Cascading Style Sheets} is stored in
 @file{webroot/css/}, the javascript in @file{webroot/js}, images in
@@ -728,6 +803,11 @@ site. The @acronym{CSS, Cascading Style Sheets} is stored in
 @node Your responsibilities under the AGPL, , Layout and appearance, Hacking on Bibliosoph
 @section Your responsibilities under the AGPL
 
+@cindex AGPL, responsibilities
+@cindex AGPL, Git
+@cindex Git, APGL
+@cindex AGPL, sharing your changes
+@cindex Changes, distributing them them
 You are required to make any changes to Bibliosoph available to your users.
 @xref{GNU Affero General Public License version 3}. The easiest way is to use
 the @uref{http://www.git-scm.org, Git Version Control System} to manage your
@@ -755,7 +835,7 @@ changes and to add the following blurb between the @code{</pre>} and
 
 @c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= c@
 
-@node Distributing Bibliosoph, Index, Hacking on Bibliosoph, Top
+@node Distributing Bibliosoph, Indices, Hacking on Bibliosoph, Top
 @chapter Distributing Bibliosoph
 
 Bibliosoph is Copyright @copyright{} 2009 Ryan Kavanagh
@@ -789,10 +869,34 @@ purpose, without condition. It was then modified and expanded by Ryan Kavanagh.
 
 @include mit.texi
 
-@node Index, , Distributing Bibliosoph, Top
-@unnumbered Index
+@node Indices, , Distributing Bibliosoph, Top
+@chapter Indices
+
+@menu
+* Concept Index::
+* Function Index::
+* Variable Index::
+* Type Index::
+@end menu
+
+@node Concept Index, Function Index, , Indices
+@section Concept Index
 
 @printindex cp
 
+@node Function Index, Variable Index, Concept Index, Indices
+@section Function Index
+
+@printindex fn
+
+@node Variable Index, Type Index, Function Index, Indices
+@section Variable Index
+
+@printindex vr
+
+@node Type Index, , Variable Index, Indices
+@section Type Index
+
+@printindex tp
 
 @bye
