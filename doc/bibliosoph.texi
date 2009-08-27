@@ -56,6 +56,7 @@ This manual is for @code{Bibliosoph} (version @value{VERSION}, @value{UPDATED}).
 * Administering Bibliosoph::
 * Hacking on Bibliosoph::
 * Distributing Bibliosoph::
+* Index::
 @end menu
 
 @c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* c@
@@ -74,9 +75,10 @@ to various criterion and a password protected admin interface.
 
 @c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* c@
 
-@node Installing Bibliosoph, Administering Bibliosoph, Introduction to Biblosoph, Top
+@node Installing Bibliosoph, Administering Bibliosoph, Introduction to Bibliosoph, Top
 @chapter Installing Bibliosoph
 
+@cindex Installing
 To install Bibliosoph, you'll need to have a SQL server supported by CakePHP
 (Bibliosoph has only been tested on MySQL, your mileage may vary with other
 servers), a webserver with PHP support such as Apache and CakePHP installed.
@@ -91,6 +93,7 @@ servers), a webserver with PHP support such as Apache and CakePHP installed.
 @node Installing CakePHP, Installing and configuring Bibliosoph, , Installing Bibliosoph
 @section Installing CakePHP
 
+@cindex CakePHP, downloading
 This installation will have Bibliosoph serve techreports from
 @file{http://www.domain.tld/}. Start by downloading CakePHP from their
 @uref{http://cakephp.org, website}. At the time of this writing, the latest
@@ -110,6 +113,8 @@ See the CakePHP documentation for various other installation methods.
 @node Installing and configuring Bibliosoph, , Installing CakePHP, Installing Bibliosoph
 @section Installing and configuring Biblisoph
 
+@cindex Bibliosoph, downloading
+@cindex Bibliosoph, git
 Download the Bibliosoph source code. You may do this by downloading the latest
 stable tarball from the Bibliosoph's web page on Github
 (@uref{http://github.com/ryanakca/Bibliosoph/tree/master}) or if you're feeling
@@ -131,6 +136,7 @@ www-data@@www:/var/www/cake$ cd  bibliosoph
 www-data@@www:/var/www/cake/bibliosoph$
 @end smallexample
 
+@cindex Bibliosoph, database
 You will now need to create the database tell bibliosoph about it. Create a user
 and a database and create the tables using the 'create_database.sql' file.
 
@@ -159,6 +165,9 @@ www-data@@www:/var/www/cake/bibliosoph$ cp config/database.php.default \
  c\onfig/database.php
 @end smallexample
 
+@cindex Bibliosoph, database configuration
+@cindex Database, configuration
+@cindex Configuration, database
 Now fill in the @var{$default} array in @file{config/database.php} with your
 database information.
 
@@ -245,6 +254,16 @@ in the Bibliosoph source. The @var{name} is the file name, it gets automatically
 renamed to the @code{Paper}'s @var{tr-id} while keeping it's original suffix.
 @end deftp
 
+@deftp Model Pdf Paper, name, type, size
+An alias for the @code{Upload} model used by the @code{Paper} model. Managed
+through the @code{Upload} section of the administrative interface.
+@end deftp
+
+@deftp Model Ps Paper, name, type, size
+An alias for the @code{Upload} model used by the @code{Paper} model. Managed
+through the @code{Upload} section of the administrative interface.
+@end deftp
+
 @deftp Model User username, password
 A @code{User} is a user with full access to the administrative interface. This
 user is identified by a @var{username} and a @var{password}. The password is
@@ -258,7 +277,7 @@ their @code{SHA-1 hash} is calculated and stored in the database.
 
 @c ------------------------------- SECTION ------------------------------- c@
 
-@node Administrative Interface Layout, Authors, , Administering Bibliosoph
+@node Administrative Interface Layout, , , Administering Bibliosoph
 @section Administrative Interface Layout
 
 The administrative interface is divided into five main views:
@@ -271,7 +290,7 @@ The administrative interface is divided into five main views:
 * Delete::
 @end menu
 
-@node Model Index, , , Administrative Interface Layout
+@node Model Index, Add, , Administrative Interface Layout
 @subsection Model Index
 
 The model index allows you to quickly browse through the available entries for
@@ -324,11 +343,419 @@ the model entry will be permanently deleted.
 A basic knowledge of PHP is required to be able to hack on Bibliosoph. A general
 knowledge of the CakePHP is also useful. CakePHP has extensive documentation
 available on their @uref{http://www.cakephp.org, website}. One must also be
-familiar with the @acronym{MVC, Model-View-Controller} architectural pattern.
+familiar with the @acronym{MVC, Model-View-Controller} architectural pattern,
+widely documented on the Internet.
+
+@menu
+* Models::
+* Views::
+* Controllers::
+* Layout and appearance::
+* Your responsibilities under the AGPL::
+@end menu
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Models, Views, , Hacking on Bibliosoph
+@section Models
+
+Models represent data. The @code{Author} model represents an Author, the
+@code{Paper} model represents a Paper, etc. Bibliosoph has the following models:
+
+@itemize
+@item @code{Author}
+@item @code{Alias}
+@item @code{Paper}
+@item @code{Pdf}
+@item @code{Ps}
+@item @code{Upload}
+@item @code{User}
+@end itemize
+
+The @code{Pdf} and @code{Ps} options are aliases for the Upload model.
+@xref{Administering Bibliosoph}, for more details on each model.
+
+To modify a model, edit the respective file in the @file{models/} directory
+(ex, to modify the @code{Author} model, edit the file
+@file{models/author.php}). These files also contain the validation rules for
+each model.
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Views, Controllers, Models, Hacking on Bibliosoph
+@section Views
+
+Views are the interface the user sees. Here you can modify the layout of a
+particular page and change how the data the controller passes to it is
+displayed. It is generally a combination of HTML and PHP code.
+
+CakePHP views are organized under the @file{views/} directory in the following
+layout @file{views/model_name/view_name.ctp}. Views for the administrative
+interface are prefixed with @file{admin_}.
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Controllers, Layout and appearance, Views, Hacking on Bibliosoph
+@section Controllers
+
+Controllers manage the logic for a single model. They often take data from the
+user and return it to be displayed in a view.
+
+CakePHP views are organized under the @file{views/} directory in the following
+layout @file{controllers/model_controller.php}. Function names match the view
+name.
+
+@menu
+* Aliases::
+* Authors::
+* Pages::
+* Papers::
+* Uploads::
+* Users::
+@end menu
+
+@c -- Controller -- c@
+@node Aliases, Authors, , Controllers
+@subsection Aliases
+
+@defcv Controller AppController AliasesController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defun beforeFilter
+Allows public access to the @code{index} view.
+@end defun
+
+@deffn {Public function} index
+Public index of @code{Alias} models.
+@end deffn
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{Alias} model.
+@end deffn
+
+@deffn {Administrative function} admin_view id
+Fetches the @code{Alias} with the id @var{id} for the @code{admin_view} view
+(@code{View} view of the administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_add
+Adds an @code{Alias} for the @code{admin_add} view (@code{Add} view of the
+administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{Alias} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Alias} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Authors, Pages, Aliases, Controllers
+@subsection Authors
+
+@defcv Controller AppController AuthorsController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defvar paginate
+The sorting of entries in the views.
+@end defvar
+
+@defun beforeFilter
+Allows public access to the @code{index} and @code{view} views.
+@end defun
+
+@deffn {Public function} index
+Public index of @code{Author} models.
+@end deffn
+
+@deffn {Public function} view id
+Fetches the @code{Author} with the id @var{id} and associated @code{Paper} model 
+entries for the @code{view} view.
+@end deffn
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{Author} model (@code{admin_index} view).
+@end deffn
+
+@deffn {Administrative function} admin_view id
+Fetches the @code{Author} with the id @var{id} for the @code{admin_view} view
+(@code{View} view of the administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_add
+Adds an @code{Author} for the @code{admin_add} view (@code{Add} view of the
+administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{Author} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Author} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Pages, Papers, Authors, Controllers
+@subsection Pages
+
+@defcv Controller AppController PagesController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar uses
+The models this controller uses.
+@end defvar
+
+@deffn {Public function} index
+Passes a list of @code{Paper} model entries to the @code{index} view.
+@end deffn
+
+@deffn {Public function} display
+Renders a page. Currently used for the @code{Copyright} page.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Papers, Uploads, Pages, Controllers
+@subsection Papers
+
+@defcv Controller AppController PapersController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defvar paginate
+The sorting of entries in the views.
+@end defvar
+
+@defun beforeFilter
+Allows public access to the @code{index}, @code{by_year} and @code{view} views.
+@end defun
+
+@deffn {Public function} index
+Public index of @code{Paper} models. Only displays @code{Paper} model entries
+who's @code{display} value is @code{1}.
+@end deffn
+
+@deffn {Public function} by_year year
+Fetches all @code{Paper} model entries with the year @var{year} for the
+@code{by_year} view.
+@end deffn
+
+@deffn {Public function} view id
+Fetches the @code{Paper} with the id @var{id} for the @code{view} view.
+@end deffn
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{Paper} model (@code{admin_index} view).
+@end deffn
+
+@deffn {Administrative function} admin_view id
+Fetches the @code{Paper} with the id @var{id} for the @code{admin_view} view
+(@code{View} view of the administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_add
+Adds a @code{Paper} for the @code{admin_add} view (@code{Add} view of the
+administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{Paper} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Paper} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Uploads, Users, Papers, Controllers
+@subsection Uploads
+
+@defcv Controller AppController UpdloadsController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defvar paginate
+The sorting of entries in the views.
+@end defvar
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{Upload} model (@code{admin_index} view).
+@end deffn
+
+@deffn {Administrative function} admin_view id
+Fetches the @code{Upload} with the id @var{id} for the @code{admin_view} view
+(@code{View} view of the administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_add
+
+Adds an @code{Upload} for the @code{admin_add} view (@code{Add} view of the
+administrative interface). We check if that the upload's @acronym{MIME type,
+Multipurpose Internet Mail Extensions type} is either @code{application/pdf},
+@code{application/ps} or @code{application/postscript} and wether or not the
+paper already has either a PDF or a PS file. If the MIME type matches and the
+paper doesn't already have a file of that type, it creates an association
+between the @code{Upload} and the @code{Paper}.
+
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{Upload} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Upload} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Users, , Uploads, Controllers
+@subsection Users
+
+@defcv Controller AppController UsersController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defun beforeFilter
+Sets the urls that the user gets redirected to after logging in and logging out.
+@end defun
+
+@deffn {Administrative function} admin_login
+Logs the user into the administrative interface.
+@end deffn
+
+@deffn {Administrative function} admin_logout
+Logs out the user from the administrative interface.
+@end deffn
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{User} model (@code{admin_index} view).
+@end deffn
+
+@deffn {Administrative function} admin_add
+Adds a @code{User} for the @code{admin_add} view (@code{Add} view of the
+administrative interface). We check compare the @code{password} and
+@code{confirm_password} hashes against each other and save the user if they
+match.
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{User} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it
+if the @code{password} and @code{confirm_password} hashes match.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Paper} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Layout and appearance, Your responsibilities under the AGPL, Controllers, Hacking on Bibliosoph
+@section Layout and appearance
+
+The file @file{views/layouts/default.ctp} contains the layout for the whole
+site. The @acronym{CSS, Cascading Style Sheets} is stored in
+@file{webroot/css/}, the javascript in @file{webroot/js}, images in
+@file{webroot/img}, etc.
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Your responsibilities under the AGPL, , Layout and appearance, Hacking on Bibliosoph
+@section Your responsibilities under the AGPL
+
+You are required to make any changes to Bibliosoph available to your users.
+@xref{GNU Affero General Public License version 3}. The easiest way is to use
+the @uref{http://www.git-scm.org, Git Version Control System} to manage your
+changes and to add the following blurb between the @code{</pre>} and
+@code{</div} tags at the end of @file{views/pages/copyright.ctp}:
+
+@smallexample
+<p>To obtain the latest modifications to the source code hosted on this server, run:</p>
+<pre>
+<?php
+    $url = "http";
+    if (array_key_exists("HTTPS", $_SERVER)) @{
+        $url .= "s";
+    @}
+    $url .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") @{
+        $url .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+    @} else @{
+        $url .= $_SERVER["SERVER_NAME"];
+    @}
+?>
+    git clone <?php echo $url . $html->webroot . '.git/'; ?>
+</pre>
+@end smallexample
 
 @c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= c@
 
-@node Distributing Bibliosoph, , Hacking on Bibliosoph, Top
+@node Distributing Bibliosoph, Index, Hacking on Bibliosoph, Top
 @chapter Distributing Bibliosoph
 
 Bibliosoph is Copyright @copyright{} 2009 Ryan Kavanagh
@@ -362,10 +789,10 @@ purpose, without condition. It was then modified and expanded by Ryan Kavanagh.
 
 @include mit.texi
 
-@comment @node Index
-@comment @unnumbered Index
+@node Index, , Distributing Bibliosoph, Top
+@unnumbered Index
 
-@comment @printindex cp
+@printindex cp
 
 
 @bye
