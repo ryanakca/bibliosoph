@@ -33,4 +33,5 @@ clean:
 	      bibliosoph.tp   bibliosoph.tps  bibliosoph.vr   bibliosoph.vrs
 
 all_clean:
-	rm -f bibliosoph.dvi  bibliosoph.pdf  bibliosoph.info bibliosoph.html
+	rm -f bibliosoph.dvi  bibliosoph.pdf  bibliosoph.info bibliosoph.html \
+	      bibliosoph.ps
