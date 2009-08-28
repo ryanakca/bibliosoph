@@ -821,7 +821,7 @@ You are required to make any changes to Bibliosoph available to your users.
 @xref{GNU Affero General Public License version 3}. The easiest way is to use
 the @uref{http://www.git-scm.org, Git Version Control System} to manage your
 changes and to add the following blurb between the @code{</pre>} and
-@code{</div} tags at the end of @file{views/pages/copyright.ctp}:
+@code{</div>} tags at the end of @file{views/pages/copyright.ctp}:
 
 @smallexample
 <p>To obtain the latest modifications to the source code hosted on this server, run:</p>
