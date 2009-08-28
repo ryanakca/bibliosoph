@@ -190,6 +190,15 @@ for a line that starts with @code{DocumentRoot} in your configurations. You also
 need to enable mod_rewrite. If using Apache, you can do this by running
 @command{a2enmond rewrite}. Restart your webserver.
 
+@cindex @file{config/bibliosoph-settings.php}
+@cindex BibTeX, setting the institution name
+@cindex BibTeX, setting the address
+@vindex @var{BibliosophSettings}
+@vindex @var{BibliosophSettings.Institution}
+@vindex @var{BibliosophSettings.TexifiedInstitution}
+@vindex @var{BibliosophSettings.Address}
+@cindex Institution, setting
+@cindex Address, setting
 Set the variables in @file{config/bibliosoph-settings.php}. They include your
 institution name and your address. These variables will be used to generate the
 BibTeX entries and will be used as part of the theme.
@@ -870,7 +879,7 @@ purpose, without condition. It was then modified and expanded by Ryan Kavanagh.
 @include mit.texi
 
 @node Indices, , Distributing Bibliosoph, Top
-@chapter Indices
+@unnumbered Indices
 
 @menu
 * Concept Index::
