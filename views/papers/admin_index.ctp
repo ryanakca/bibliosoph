@@ -64,6 +64,7 @@ foreach ($papers as $paper):
                 <td>
                         <?php echo $paper['Paper']['pages']; ?>
                 </td>
+                <td>
                         <?php if ($paper['Paper']['display'] == 1) {
                             echo 'True';
                         } else {
@@ -93,6 +94,8 @@ foreach ($papers as $paper):
                     array('controller'=>'authors', 'action'=>'index')); ?></li>
                 <li><?php echo $html->link(__('Aliases', true),
                     array('controller'=>'aliases', 'action'=>'index')); ?></li>
+                <li><?php echo $html->link(__('Users', true),
+                    array('controller'=>'users', 'action'=>'index')); ?></li>
                 <li><?php echo $html->link(__('Logout', true),
                     array('controller'=>'users', 'action'=>'logout')); ?></li>
 	</ul>

@@ -57,6 +57,8 @@ foreach ($aliases as $alias):
                     array('controller'=>'authors', 'action'=>'index')); ?></li>
                 <li><?php echo $html->link(__('Uploads', true),
                     array('controller'=>'uploads', 'action'=>'index')); ?></li>
+                <li><?php echo $html->link(__('Users', true),
+                    array('controller'=>'users', 'action'=>'index')); ?></li>
                 <li><?php echo $html->link(__('Logout', true),
                     array('controller'=>'users', 'action'=>'logout')); ?></li>
 	</ul>

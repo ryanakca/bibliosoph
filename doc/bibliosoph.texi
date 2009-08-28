@@ -1,0 +1,911 @@
+\input texinfo   @c -*-texinfo-*-
+@setfilename bibliosoph.info
+@settitle Bibliosoph
+@syncodeindex pg cp
+@comment Commented out allowcodebreaks because it breaks on older versions of
+@comment texi2pdf and there aren't any differences in output with or without it.
+@comment @allowcodebreaks false
+@set VERSION UNRELEASED
+@set UPDATED 26 August 2009
+@set UPDATED-MONTH August 2009
+@comment %**end of header
+@copying
+This manual is for Bibliosoph (version @value{VERSION}, @value{UPDATED}).
+
+Copyright @copyright{} 2009 Ryan Kavanagh (@email{ryanakca@@kubuntu.org}).
+
+@quotation
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+@end quotation
+@end copying
+
+@dircategory Bibliosoph Technical Reports Manager
+@direntry
+* Bibliosoph:: Bibliosoph
+@end direntry
+
+@titlepage
+@title Bibliosoph
+@subtitle Technical Reports Manager
+@subtitle Version @value{VERSION}, @value{UPDATED-MONTH}
+@author Ryan Kavanagh (@email{ryanakca@@kubuntu.org})
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top, Introduction to Bibliosoph, (dir), (dir)
+@top Turnin-NG
+@ifinfo
+This manual is for @code{Bibliosoph} (version @value{VERSION}, @value{UPDATED}).
+@end ifinfo
+@end ifnottex
+
+@ifhtml
+@insertcopying
+@end ifhtml
+
+@menu
+* Introduction to Bibliosoph::
+* Installing Bibliosoph::
+* Administering Bibliosoph::
+* Hacking on Bibliosoph::
+* Distributing Bibliosoph::
+* Indices::
+@end menu
+
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* c@
+
+@node Introduction to Bibliosoph, Installing Bibliosoph, Top, Top
+@comment node-name, next, previous, up
+@chapter Introduction to Bibliosoph
+
+Bibliosoph is a free and open-source technical reports manager powered by the
+powerful @uref{http://cakephp.org, CakePHP framework}. It's main features allow
+grouping of papers written by the same authors under various aliases (ex: Smith,
+John E. writes papers under the names "John Edwin Smith", "Smith, J." and "J. E.
+Smith"), easy upload of the technical reports in PDF and PS format, the
+generation of BibTeX entries, sorting of papers, authors and aliases according
+to various criterion and a password protected admin interface.
+
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* c@
+
+@node Installing Bibliosoph, Administering Bibliosoph, Introduction to Bibliosoph, Top
+@chapter Installing Bibliosoph
+
+@cindex Installing
+To install Bibliosoph, you'll need to have a SQL server supported by CakePHP
+(Bibliosoph has only been tested on MySQL, your mileage may vary with other
+servers), a webserver with PHP support such as Apache and CakePHP installed.
+
+@menu
+* Installing CakePHP::
+* Installing and configuring Bibliosoph::
+@end menu
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Installing CakePHP, Installing and configuring Bibliosoph, , Installing Bibliosoph
+@section Installing CakePHP
+
+@cindex CakePHP, downloading
+This installation will have Bibliosoph serve techreports from
+@file{http://www.domain.tld/}. Start by downloading CakePHP from their
+@uref{http://cakephp.org, website}. At the time of this writing, the latest
+CakePHP version is 1.2.8.8284. 
+
+@smallexample
+www-data@@www:/var/www$ wget --quiet -O cake_1.2.4.8284.tar.bz2 \
+ http://cakeforge.org/frs/download.php/724/cake_1.2.4.8284.tar.bz2/donation=complete
+www-data@@www:/var/www$ tar jxf cake_1.2.4.8284.tar.bz2
+www-data@@www:/var/www$ mv cake_1.2.4.8284/ cake
+@end smallexample
+
+See the CakePHP documentation for various other installation methods.
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Installing and configuring Bibliosoph, , Installing CakePHP, Installing Bibliosoph
+@section Installing and configuring Biblisoph
+
+@cindex Bibliosoph, downloading
+@cindex Bibliosoph, git
+Download the Bibliosoph source code. You may do this by downloading the latest
+stable tarball from the Bibliosoph's web page on Github
+(@uref{http://github.com/ryanakca/Bibliosoph/tree/master}) or if you're feeling
+adventurous, you can get the latest development code by running @command{git
+clone git://github.com/ryanakca/bibliosoph.git}.
+
+The downloaded directory needs to be renamed to
+@file{/var/www/cake/bibliosoph/}.
+
+@smallexample
+www-data@@www:/var/www$ cd cake
+www-data@@www:/var/www/cake$ git clone git://github.com/ryanakca/bibliosoph.git
+Initialized empty Git repository in /var/www/cake/bibliosoph/.git/
+remote: Counting objects: 676, done.
+remote: Compressing objects: 100% (306/306), done.
+remote: Total 676 (delta 450), reused 524 (delta 351)
+Receiving objects: 100% (676/676), 105.22 KiB, done.
+www-data@@www:/var/www/cake$ cd  bibliosoph
+www-data@@www:/var/www/cake/bibliosoph$
+@end smallexample
+
+@cindex Bibliosoph, database creation
+@cindex Creation, Bibliosoph database
+You will now need to create the database tell bibliosoph about it. Create a user
+and a database and create the tables using the 'create_database.sql' file.
+
+@smallexample
+www-data@@www:/var/www/cake/bibliosoph$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 58
+Server version: 5.1.37-1ubuntu2 (Ubuntu)
+
+Type `help;' or `\h' for help. Type `\c' to clear the current input statement.
+
+mysql> create database bibliosoph;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> GRANT ALL ON bibliosoph.* TO 'bibliosoph'@@'localhost'
+    -> IDENTIFIED BY 'bibliosoph_password';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> quit
+Bye
+www-data@@www:/var/www/cake/bibliosoph$ mysql -u bibliosoph -p bibliosoph \
+ create_database.sql
+Enter password: (Enter the database password here)
+www-data@@www:/var/www/cake/bibliosoph$ cp config/database.php.default \
+ c\onfig/database.php
+@end smallexample
+
+@cindex Bibliosoph, database configuration
+@cindex Database, configuration
+@cindex Configuration, database
+Now fill in the @var{$default} array in @file{config/database.php} with your
+database information.
+
+@cindex @file{config/core.php.default}
+@cindex @file{config/core.php}
+@vindex @var{Security.salt}
+@cindex Salt
+@cindex Password, hash
+@cindex Hash, salt
+You also need to copy @file{config/core.php.default} to @file{config/core.php}.
+Modify the settings to your liking and ensure that you change the value of
+@code{Security.salt} on the @code{Configure::write('Security.salt', '....');}
+line to something random and different from the default. This value will be the
+salt used when hashing passwords when adding and removing users.
+
+You now need to set your webserver's document root to Bibliosoph's webroot,
+@file{/var/www/cake/bibliosoph/webroot} in this installation. For Apache, look
+for a line that starts with @code{DocumentRoot} in your configurations. You also
+need to enable mod_rewrite. If using Apache, you can do this by running
+@command{a2enmond rewrite}. Restart your webserver.
+
+@cindex @file{config/bibliosoph-settings.php}
+@cindex BibTeX, setting the institution name
+@cindex BibTeX, setting the address
+@vindex @var{BibliosophSettings}
+@vindex @var{BibliosophSettings.Institution}
+@vindex @var{BibliosophSettings.TexifiedInstitution}
+@vindex @var{BibliosophSettings.Address}
+@cindex Institution, setting
+@cindex Address, setting
+Set the variables in @file{config/bibliosoph-settings.php}. They include your
+institution name and your address. These variables will be used to generate the
+BibTeX entries and will be used as part of the theme.
+
+@cindex User, creation
+@cindex Creating a user
+@cindex create_user
+@cindex Shell script, create_user
+Finally, you will need to create an administrative user to manage the site. You
+may do this by using @uref{http://springenwerk.com/, Johannes Fahrenkrug's}
+create_user CakePHP shell script. There is no default user to ensure that nobody
+compromises a partially configured site.
+
+@smallexample
+www-data@@www:/var/www/cake/bibliosoph$ ../cake/console/cake \
+ -app /var/www/cake/bibliosoph create_user
+App : bibliosoph
+Path: /var/www/cake/bibliosoph
+---------------------------------------------------------------
+Create Admin User:
+---------------------------------------------------------------
+Username:
+> webmaster
+Password:
+> webmaster
+Password Confirmation:
+> webmaster
+Admin User created successfully!
+@end smallexample
+
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= c@
+
+@node Administering Bibliosoph, Hacking on Bibliosoph, Installing Bibliosoph, Top
+@chapter Administering Bibliosoph
+
+The Bibliosoph administration panel aims to make adding, editing and removing
+authors, aliases, papers, uploads and users as easy as possible. This chapter
+will discuss the general layout of the administrative interface, general work
+flow and go into further detail of each panel of the admin interface. However,
+first a few definitions are in place.
+
+@deftp Model Author Aliases, first name, initial, last name, homepage, email
+An @code{Author} is a model that represents a group of @code{Aliases} along with
+information regarding the @code{Author}, such as the author's @var{first name},
+@var{initial}, @var{last name}, @var{homepage} and @var{email}. An @code{Author}
+may have multiple @code{Aliases}.
+@end deftp
+
+@deftp Model Alias Author, Papers, name
+An @code{Alias} is a model that represents an @code{Author} as they appear on
+the technical report and can be associated with multiple @code{Paper} objects.
+It is for this reason that an @code{Alias} only has a @var{name} field instead
+of @var{last name}, @var{first name} and @var{initial} since some authors may
+submit a paper under ``John E. Smith'' once,  ``Smith, John'' another time and
+then finally under ``John Edwin Smith''. The layout of the name is important
+when citing.
+@end deftp
+
+@deftp Model Paper Aliases, Pdf, Ps, tr-id, title, published on, pages, display
+A @code{Paper} is a technical report associated with at least on @code{Alias}
+and possibly with an @code{Upload}. Each @code{Paper} has a unique
+@acronym{@var{tr-id}, Technical Report ID}, a @var{title}, the date that it was
+@var{published on}, a number of @var{pages}, and a boolean @var{display} field
+which lets Bibliosoph know wether or not to publicly display the technical
+report.
+@end deftp
+
+@deftp Model Upload Paper, name, type, size
+An @code{Upload} is an uploaded file, either in @acronym{PDF, Portable Document
+Format} or in @acronym{PS, PostScript} format associated to a @code{Paper}. This
+file gets uploaded to @file{/files/} on the webserver, or @file{webroot/files/}
+in the Bibliosoph source. The @var{name} is the file name, it gets automatically
+renamed to the @code{Paper}'s @var{tr-id} while keeping it's original suffix.
+@end deftp
+
+@deftp Model Pdf Paper, name, type, size
+An alias for the @code{Upload} model used by the @code{Paper} model. Managed
+through the @code{Upload} section of the administrative interface.
+@end deftp
+
+@deftp Model Ps Paper, name, type, size
+An alias for the @code{Upload} model used by the @code{Paper} model. Managed
+through the @code{Upload} section of the administrative interface.
+@end deftp
+
+@deftp Model User username, password
+A @code{User} is a user with full access to the administrative interface. This
+user is identified by a @var{username} and a @var{password}. The password is
+prefixed by the value of @code{Security.salt} in @file{config/core.php} and
+their @code{SHA-1 hash} is calculated and stored in the database.
+@end deftp
+
+@menu
+* Administrative Interface Layout::
+@end menu
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Administrative Interface Layout, , , Administering Bibliosoph
+@section Administrative Interface Layout
+
+The administrative interface is divided into five main views:
+
+@menu
+* Model Index::
+* Add::
+* Edit::
+* View::
+* Delete::
+@end menu
+
+@node Model Index, Add, , Administrative Interface Layout
+@subsection Model Index
+
+@cindex Model Index
+@cindex Sorting
+
+The model index allows you to quickly browse through the available entries for
+each model. Clicking on a column's headers on the table will often allow you to
+sort entries in ascending order. Clicking the same header will sort the entries
+in decreasing order. Each row also has links to @code{Action} items, allowing
+you to @code{Edit}, @code{View} or @code{Delete} an entry. Not all of the action
+entries are available for each model. There are also links to the other models
+from the bottom of the model index.
+
+@node Add, Edit, Model Index, Administrative Interface Layout
+@subsection Add
+
+@cindex Adding, a model entry
+@cindex Creating, a model entry
+@cindex New <MODEL>
+Adding a new entry to a model is done by selecting the @code{New <MODEL>} link at
+the bottom of the model's index page. The administrator will be brought to a
+page with a form, where required fields are in bold.
+
+@node Edit, View, Add, Administrative Interface Layout
+@subsection Edit
+
+@cindex Editing, a model entry
+
+Editing an entry is done by selecting the @code{Edit} action item from model
+entry's @code{View} page or from the model entry's row on the @code{Model
+Index} page. The page will be identical to the model's @code{Add} except that
+the fields will be prepopulated with the current values.
+
+@node View, Delete, Edit, Administrative Interface Layout
+@subsection View
+
+@cindex Model, detail
+@cindex Model, associations
+@cindex Viewing, a model entry
+Viewing an entry is done by selecting the @code{View} action item from the model
+entry's row on the @code{Model Index} page. From here, the administrator may
+view information that might not be displayed on the @code{Model Index} page due
+to space constraints. The @code{View} page also allows the administrator to view
+models that this entry is associated with, for example, on an @code{Author}'s
+@code{View} page, the administrator may view associated @code{Aliases}.
+
+@node Delete, , View, Administrative Interface Layout
+@subsection Delete
+
+@cindex Model, deleting
+@cindex Deleting, a model entry
+@cindex Dialog, deleting
+@cindex Deleting, Dialog
+@cindex Permanent, deleting
+@cindex Deleting, permanent
+
+Deleting an entry is done by selecting the @code{Delete} action item from the
+model entry's row on the @code{Model Index} page, from its @code{View} page or
+even from its @code{Edit} page. The administrator will be prompted with a dialog
+box, asking if they really want to delete the model entry, and if the accept,
+the model entry will be permanently deleted.
+
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= c@
+
+@node Hacking on Bibliosoph, Distributing Bibliosoph, Administering Bibliosoph, Top
+@chapter Hacking on Bibliosoph
+
+@cindex MVC
+@cindex Model-View-Controller
+@cindex Architectural pattern
+A basic knowledge of PHP is required to be able to hack on Bibliosoph. A general
+knowledge of the CakePHP is also useful. CakePHP has extensive documentation
+available on their @uref{http://www.cakephp.org, website}. One must also be
+familiar with the @acronym{MVC, Model-View-Controller} architectural pattern,
+widely documented on the Internet.
+
+@menu
+* Models::
+* Views::
+* Controllers::
+* Layout and appearance::
+* Your responsibilities under the AGPL::
+@end menu
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Models, Views, , Hacking on Bibliosoph
+@section Models
+
+@cindex Model, list
+@cindex Model, what they represent
+@cindex Model, definition
+@cindex Bibliosoph, models used
+Models represent data. The @code{Author} model represents an Author, the
+@code{Paper} model represents a Paper, etc. Bibliosoph has the following models:
+
+@itemize
+@item @code{Author}
+@item @code{Alias}
+@item @code{Paper}
+@item @code{Pdf}
+@item @code{Ps}
+@item @code{Upload}
+@item @code{User}
+@end itemize
+
+@cindex Pdf, alias for Upload
+@cindex Ps, alias for Upload
+The @code{Pdf} and @code{Ps} options are aliases for the Upload model.
+@xref{Administering Bibliosoph}, for more details on each model.
+
+@cindex Model, modifying
+@cindex Model, validation rules
+@cindex Validation, models
+To modify a model, edit the respective file in the @file{models/} directory
+(ex, to modify the @code{Author} model, edit the file
+@file{models/author.php}). These files also contain the validation rules for
+each model.
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Views, Controllers, Models, Hacking on Bibliosoph
+@section Views
+
+@cindex Views, definition
+@cindex Views, modify layout
+@cindex Modify, layout
+@cindex Layout, modify
+@cindex Views, HTML
+@cindex Views, PHP
+Views are the interface the user sees. Here you can modify the layout of a
+particular page and change how the data the controller passes to it is
+displayed. It is generally a combination of HTML and PHP code.
+
+@cindex Views, file organization
+@cindex File organization, views
+@cindex Organization, views files
+@cindex Administrative views, prefix
+@cindex Prefix, administrative views
+@cindex Views, administrative prefix
+CakePHP views are organized under the @file{views/} directory in the following
+layout @file{views/model_name/view_name.ctp}. Views for the administrative
+interface are prefixed with @file{admin_}.
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Controllers, Layout and appearance, Views, Hacking on Bibliosoph
+@section Controllers
+
+@cindex Controller, definition
+@cindex Controller, input
+@cindex Controller, display
+Controllers manage the logic for a single model. They often take data from the
+user and return it to be displayed in a view.
+
+@cindex Controllers, file organization
+@cindex File organization, controllers
+@cindex Organization, controllers files
+@cindex Controllers, list of
+CakePHP controllers are organized under the @file{controllers/} directory in
+the following layout @file{controllers/model_controller.php}. Function names
+match the view name.
+
+@menu
+* Aliases::
+* Authors::
+* Pages::
+* Papers::
+* Uploads::
+* Users::
+@end menu
+
+@c -- Controller -- c@
+@node Aliases, Authors, , Controllers
+@subsection Aliases
+
+@defcv Controller AppController AliasesController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defun beforeFilter
+Allows public access to the @code{index} view.
+@end defun
+
+@deffn {Public function} index
+Public index of @code{Alias} models.
+@end deffn
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{Alias} model.
+@end deffn
+
+@deffn {Administrative function} admin_view id
+Fetches the @code{Alias} with the id @var{id} for the @code{admin_view} view
+(@code{View} view of the administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_add
+Adds an @code{Alias} for the @code{admin_add} view (@code{Add} view of the
+administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{Alias} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Alias} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Authors, Pages, Aliases, Controllers
+@subsection Authors
+
+@defcv Controller AppController AuthorsController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defvar paginate
+The sorting of entries in the views.
+@end defvar
+
+@defun beforeFilter
+Allows public access to the @code{index} and @code{view} views.
+@end defun
+
+@deffn {Public function} index
+Public index of @code{Author} models.
+@end deffn
+
+@deffn {Public function} view id
+Fetches the @code{Author} with the id @var{id} and associated @code{Paper} model 
+entries for the @code{view} view.
+@end deffn
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{Author} model (@code{admin_index} view).
+@end deffn
+
+@deffn {Administrative function} admin_view id
+Fetches the @code{Author} with the id @var{id} for the @code{admin_view} view
+(@code{View} view of the administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_add
+Adds an @code{Author} for the @code{admin_add} view (@code{Add} view of the
+administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{Author} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Author} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Pages, Papers, Authors, Controllers
+@subsection Pages
+
+@defcv Controller AppController PagesController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar uses
+The models this controller uses.
+@end defvar
+
+@deffn {Public function} index
+Passes a list of @code{Paper} model entries to the @code{index} view.
+@end deffn
+
+@deffn {Public function} display
+Renders a page. Currently used for the @code{Copyright} page.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Papers, Uploads, Pages, Controllers
+@subsection Papers
+
+@defcv Controller AppController PapersController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defvar paginate
+The sorting of entries in the views.
+@end defvar
+
+@defun beforeFilter
+Allows public access to the @code{index}, @code{by_year} and @code{view} views.
+@end defun
+
+@deffn {Public function} index
+Public index of @code{Paper} models. Only displays @code{Paper} model entries
+who's @code{display} value is @code{1}.
+@end deffn
+
+@deffn {Public function} by_year year
+Fetches all @code{Paper} model entries with the year @var{year} for the
+@code{by_year} view.
+@end deffn
+
+@deffn {Public function} view id
+Fetches the @code{Paper} with the id @var{id} for the @code{view} view.
+@end deffn
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{Paper} model (@code{admin_index} view).
+@end deffn
+
+@deffn {Administrative function} admin_view id
+Fetches the @code{Paper} with the id @var{id} for the @code{admin_view} view
+(@code{View} view of the administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_add
+Adds a @code{Paper} for the @code{admin_add} view (@code{Add} view of the
+administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{Paper} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Paper} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Uploads, Users, Papers, Controllers
+@subsection Uploads
+
+@defcv Controller AppController UploadsController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defvar paginate
+The sorting of entries in the views.
+@end defvar
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{Upload} model (@code{admin_index} view).
+@end deffn
+
+@deffn {Administrative function} admin_view id
+Fetches the @code{Upload} with the id @var{id} for the @code{admin_view} view
+(@code{View} view of the administrative interface).
+@end deffn
+
+@deffn {Administrative function} admin_add
+
+Adds an @code{Upload} for the @code{admin_add} view (@code{Add} view of the
+administrative interface). We check if that the upload's @acronym{MIME type,
+Multipurpose Internet Mail Extensions type} is either @code{application/pdf},
+@code{application/ps} or @code{application/postscript} and wether or not the
+paper already has either a PDF or a PS file. If the MIME type matches and the
+paper doesn't already have a file of that type, it creates an association
+between the @code{Upload} and the @code{Paper}.
+
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{Upload} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Upload} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c -- Controller -- c@
+@node Users, , Uploads, Controllers
+@subsection Users
+
+@defcv Controller AppController UsersController
+@defvar name
+The controller's name.
+@end defvar
+
+@defvar helpers
+The CakePHP the controller uses.
+@end defvar
+
+@defvar components
+The CakePHP components the controller uses.
+@end defvar
+
+@defun beforeFilter
+Sets the urls that the user gets redirected to after logging in and logging out.
+@end defun
+
+@deffn {Administrative function} admin_login
+Logs the user into the administrative interface.
+@end deffn
+
+@deffn {Administrative function} admin_logout
+Logs out the user from the administrative interface.
+@end deffn
+
+@deffn {Administrative function} admin_index
+@code{Model Index} for the @code{User} model (@code{admin_index} view).
+@end deffn
+
+@deffn {Administrative function} admin_add
+Adds a @code{User} for the @code{admin_add} view (@code{Add} view of the
+administrative interface). We check compare the @code{password} and
+@code{confirm_password} hashes against each other and save the user if they
+match.
+@end deffn
+
+@deffn {Administrative function} admin_edit id
+Fetches the @code{User} with the id @var{id} for the @code{admin_edit} view
+(@code{Edit} view of the administrative interface) and saves changes made to it
+if the @code{password} and @code{confirm_password} hashes match.
+@end deffn
+
+@deffn {Administrative function} admin_delete id
+Deletes the @code{Paper} with the id @var{id}.
+@end deffn
+@end defcv
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Layout and appearance, Your responsibilities under the AGPL, Controllers, Hacking on Bibliosoph
+@section Layout and appearance
+
+@cindex Layout, global
+@cindex Global layout
+@cindex @file{views/layouts/default.ctp}
+@cindex Layout, appearance
+@cindex Global appearance
+@cindex CSS
+@cindex JS
+@cindex Javascript
+@cindex Images
+@cindex File organization, CSS
+@cindex File organization, Javascript
+@cindex File organization, Images
+@cindex Organization, CSS files
+@cindex Organization, Javascript files
+@cindex Organization, Image files
+The file @file{views/layouts/default.ctp} contains the layout for the whole
+site. The @acronym{CSS, Cascading Style Sheets} is stored in
+@file{webroot/css/}, the javascript in @file{webroot/js}, images in
+@file{webroot/img}, etc.
+
+@c ------------------------------- SECTION ------------------------------- c@
+
+@node Your responsibilities under the AGPL, , Layout and appearance, Hacking on Bibliosoph
+@section Your responsibilities under the AGPL
+
+@cindex AGPL, responsibilities
+@cindex AGPL, Git
+@cindex Git, APGL
+@cindex AGPL, sharing your changes
+@cindex Changes, distributing them them
+You are required to make any changes to Bibliosoph available to your users.
+@xref{GNU Affero General Public License version 3}. The easiest way is to use
+the @uref{http://www.git-scm.org, Git Version Control System} to manage your
+changes and to add the following blurb between the @code{</pre>} and
+@code{</div} tags at the end of @file{views/pages/copyright.ctp}:
+
+@smallexample
+<p>To obtain the latest modifications to the source code hosted on this server, run:</p>
+<pre>
+<?php
+    $url = "http";
+    if (array_key_exists("HTTPS", $_SERVER)) @{
+        $url .= "s";
+    @}
+    $url .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") @{
+        $url .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+    @} else @{
+        $url .= $_SERVER["SERVER_NAME"];
+    @}
+?>
+    git clone <?php echo $url . $html->webroot . '.git/'; ?>
+</pre>
+@end smallexample
+
+@c =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= CHAPTER =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= c@
+
+@node Distributing Bibliosoph, Indices, Hacking on Bibliosoph, Top
+@chapter Distributing Bibliosoph
+
+Bibliosoph is Copyright @copyright{} 2009 Ryan Kavanagh
+(@email{ryanakca@@kubuntu.org}). It is licensed under the terms of the GNU
+Affero General Public License version 3, or (at your option) any later version.
+
+The files @file{controllers/component/file_upload.php} and
+@file{views/helpers/file_upload.php} are Copyright @copyright{} 2009 Nick Baker
+and are licensed under the MIT License.
+
+All content that was distributed in the cake.app subpackage is Copyright
+@copyright{} 2005-2009 @uref{http://www.cakefoundation.org, Cake Software
+Foundation Inc.}, and is distributed under the MIT License.
+
+The `view' action in the Author controller was written by
+@uref{http://mark-story.com, Mark Story} and can distributed and used for any
+purpose, without condition. It was then modified and expanded by Ryan Kavanagh.
+
+@menu
+* GNU Affero General Public License version 3::
+* MIT License::
+@end menu
+
+@node GNU Affero General Public License version 3, MIT License, , Distributing Bibliosoph
+@section GNU Affero General Public License version 3
+
+@include agpl-3.0.texi
+
+@node MIT License, , GNU Affero General Public License version 3, Distributing Bibliosoph
+@section MIT License
+
+@include mit.texi
+
+@node Indices, , Distributing Bibliosoph, Top
+@unnumbered Indices
+
+@menu
+* Concept Index::
+* Function Index::
+* Variable Index::
+* Type Index::
+@end menu
+
+@node Concept Index, Function Index, , Indices
+@section Concept Index
+
+@printindex cp
+
+@node Function Index, Variable Index, Concept Index, Indices
+@section Function Index
+
+@printindex fn
+
+@node Variable Index, Type Index, Function Index, Indices
+@section Variable Index
+
+@printindex vr
+
+@node Type Index, , Variable Index, Indices
+@section Type Index
+
+@printindex tp
+
+@bye
