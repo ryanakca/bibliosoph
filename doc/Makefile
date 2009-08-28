@@ -2,7 +2,7 @@
 
 all: html pdf info dvi ps clean
 
-html: bibliosoph.texi
+html: bibliosoph.texi bibliosoph.texi.init
 	texi2html --init-file=bibliosoph.texi.init bibliosoph.texi
 
 pdf: bibliosoph.texi
