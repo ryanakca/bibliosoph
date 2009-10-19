@@ -41,7 +41,11 @@
 		</dd>
                 <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Pages'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $paper['Paper']['pages']; ?>
+                        <?php if ($paper['Paper']['pages'] == 0) {
+                            echo "N/A";
+                        } else {
+                            echo $paper['Paper']['pages'];
+                        } ?>
                         &nbsp;
                 </dd>
                 <dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Authors');?></dt>
