@@ -6,8 +6,12 @@ class Author extends AppModel {
 	var $validate = array(
 		'first_name' => array('notempty'),
 		'last_name' => array('notempty'),
-		'email' => array('email'),
-		'homepage' => array('url'),
+                'email' => array('rule'=>'email',
+                                 'required'=>false,
+                                 'allowEmpty'=>true),
+                'homepage' => array('rule'=>'url',
+                                    'required'=>false,
+                                    'allowEmpty'=>true),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
