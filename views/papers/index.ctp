@@ -55,7 +55,11 @@ foreach ($papers as $paper):
                         } ?>
                 </td>
                 <td>
-                        <?php echo $paper['Paper']['pages'] ?>
+                        <?php if ($paper['Paper']['pages'] == 0) {
+                            echo "N/A";
+                        } else {
+                            echo $paper['Paper']['pages'];
+                        } ?>
                 </td>
                 <td>
                         <?php if ($paper['Alias']): ?>

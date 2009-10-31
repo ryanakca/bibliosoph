@@ -76,7 +76,13 @@
                             echo "No PS available";
                         } ?>
                 </td>
-                <td><?php echo $paper['Paper']['pages'] ?></td>
+                <td>
+                        <?php if ($paper['Paper']['pages'] == 0) {
+                            echo "N/A";
+                        } else {
+                            echo $paper['Paper']['pages'];
+                        } ?>
+                </td>
                 </tr>
         <?php endforeach; ?>
 
