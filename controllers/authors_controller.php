@@ -14,6 +14,16 @@ class AuthorsController extends AppController {
 		$this->Author->recursive = 0;
 		$this->set('authors', $this->paginate());
 	}
+
+        function search() {
+                $this->Author->recursive = 0;
+                $lastname = $this->data['Search']['last_name'];
+                $this->paginate['conditions'][]['Author.last_name LIKE'] = \
+                    str_replace('*', '%', $lastname);
+                $this->set('title', 'Search results for lastname:' . $lastname);
+                $this->render('index');
+        }
+
         function view($id = null) {
                // Thanks to Mark Story from #cakephp on irc.freenode.net for
                // contributing this code.
