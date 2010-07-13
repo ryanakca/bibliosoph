@@ -1,5 +1,17 @@
 <div class="authors index">
 <h2><?php __('Authors');?></h2>
+<div id="search">
+<?php echo $form->create('Author', array('action'=>'search')); ?>
+    <fieldset>
+        <legend><?php __('Find Author'); ?></legend>
+        <?php
+        echo $form->input('Search.last_name');
+        echo $form->submit('Search');
+        ?>
+    </fieldset>
+<?php echo $form->end(); ?>
+</div>
+
 <p>
 <?php
 echo $paginator->counter(array(
