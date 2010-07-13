@@ -48,8 +48,12 @@ class AuthorsController extends AppController {
         function admin_search() {
                 $this->Author->recursive = 0;
                 $lastname = $this->data['Search']['last_name'];
-                $this->paginate['conditions'][]['Author.last_name LIKE'] = \
-                    str_replace('*', '%', $lastname);
+		$this->paginate = array(
+			'conditions' => array('Author.last_name LIKE' =>
+					    str_replace('*', '%', $lastname)),
+			'order' => array('Author.last_name' => 'asc')
+		);
+		$this->set('authors', $this->paginate());
                 $this->set('title', 'Search results for lastname:' . $lastname);
                 $this->render('admin_index');
         }
