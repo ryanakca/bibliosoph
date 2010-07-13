@@ -38,7 +38,7 @@ foreach ($papers as $paper):
                         strtotime($paper['Paper']['published_on'])); ?>
 		</td>
                 <td>
-                        <?php if ($paper['Pdf']['name']) {
+                        <?php if (isset($paper['Pdf']['name'])) {
                             echo $html->link('PDF',
                                 $html->webroot.'files/'.$paper['Pdf']['name']).'
                                 ('.round($paper['Pdf']['size'] / 1024).' KB)';
@@ -47,7 +47,7 @@ foreach ($papers as $paper):
                         } ?>
                 </td>
                 <td>
-                        <?php if ($paper['Ps']['name']) {
+                        <?php if (isset($paper['Ps']['name'])) {
                             echo $html->link('PS',
                                 $html->webroot.'files/'.$paper['Ps']['name']).'
                                 ('.round($paper['Ps']['size'] / 1024).' KB)';
