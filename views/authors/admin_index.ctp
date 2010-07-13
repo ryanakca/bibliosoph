@@ -1,7 +1,7 @@
 <div class="authors index">
 <h2><?php __('Authors');?></h2>
 <div id="search">
-<?php echo $form->create('Author', array('action'=>'search')); ?>
+<?php echo $form->create('Author', array('action'=>'search', 'admin'=>true)); ?>
     <fieldset>
         <legend><?php __('Find Author'); ?></legend>
         <?php
