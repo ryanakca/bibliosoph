@@ -7,6 +7,7 @@
         <?php
         echo $form->input('Search.last_name');
         echo $form->submit('Search');
+        echo $html->link('Return to index', array('action'=>'index'));
         ?>
     </fieldset>
 <?php echo $form->end(); ?>
