@@ -38,7 +38,10 @@ class AliasesController extends AppController {
 			}
 		}
 		$papers = $this->Alias->Paper->find('list');
-		$authors = $this->Alias->Author->find('list');
+                $authors = $this->Alias->Author->find('superlist', array(
+                    'fields'=> array('Author.id', 'Author.last_name', 'Author.first_name', 'Author.initial'),
+                    'format'=> '%s, %s %s'
+                ));
 		$this->set(compact('papers', 'authors'));
 	}
 
