@@ -482,3 +482,31 @@ div.code-coverage-results span.result-good {
 pre.bibtex {
         line-height: normal;
 }
+
+/* Search form */
+#search {
+	width: 40%;
+	float: right;
+	position: relative;
+	top: -80px;
+	right: -20px;
+	margin-bottom: 0px;
+}
+#search fieldset {
+	padding: 5px;
+}
+#search fieldset legend {
+	font-size: 110%;
+}
+#search fieldset label {
+	float: left;
+}
+#search fieldset input {
+	float: left;
+}
+#search form div..reset {
+	float: left;
+}
+#search form div.submit {
+	float: right;
+}
