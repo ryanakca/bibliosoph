@@ -47,7 +47,7 @@ class UploadsController extends AppController {
                                 }
                         }
 		}
-		$papers = $this->Upload->Paper->find('list');
+		$papers = $this->Upload->Paper->find('list', array('order'=>'`tr-id`'));
 		$this->set(compact('papers'));
 	}
 
