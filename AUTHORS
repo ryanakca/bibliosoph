@@ -27,7 +27,7 @@ All content that was distributed in the cake.app subpackage is Copyright
 2005-2009, Cake Software Foundation, Inc. (http://www.cakefoundation.org), and
 is distributed under the MIT License, see above.
 
-The files controllers/component/file_upload.php and
+The files app_model.php, controllers/component/file_upload.php and
 views/helpers/file_upload.php are Copyright 2009 Nick Baker and are licensed
 under the MIT License (http://www.opensource.org/licenses/mit-license.php).
 
