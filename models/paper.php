@@ -60,5 +60,26 @@ class Paper extends AppModel {
                 )
         );
 
+
+	function compareTrId ($a, $b) {
+                // 2010-02 < 2011-19 < 2011-100 < 2012-52
+		$ya = substr($a, 0, 4);
+		$yb = substr($b, 0, 4);
+		$ida = substr($a, 5);
+		$idb = substr($b, 5);
+		if ($a == $b) {
+			return 0;
+                } elseif ($ya == $yb) {
+                        return ($ida < $idb) ? -1 : 1;
+                } else {
+                        return ($ya < $yb) ? -1 : 1;
+                }
+	}
+
+        function fetchAndSortByTrID() {
+                $papers = $this->find('list');
+                uasort($papers, array($this, 'compareTrID'));
+                return $papers;
+        }
 }
 ?>
