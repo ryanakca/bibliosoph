@@ -73,7 +73,6 @@
 	<ul>
 		<li><?php echo $html->link(__('Edit Paper', true), array('action'=>'edit', $paper['Paper']['id'])); ?> </li>
 		<li><?php echo $html->link(__('Delete Paper', true), array('action'=>'delete', $paper['Paper']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $paper['Paper']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Papers', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Paper', true), array('action'=>'add')); ?> </li>
 	</ul>
 </div>
+<?php echo $this->element('admin_bar'); ?>

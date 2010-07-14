@@ -42,7 +42,6 @@
 	<ul>
 		<li><?php echo $html->link(__('Edit Upload', true), array('action'=>'edit', $upload['Upload']['id'])); ?> </li>
 		<li><?php echo $html->link(__('Delete Upload', true), array('action'=>'delete', $upload['Upload']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $upload['Upload']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Uploads', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Upload', true), array('action'=>'add')); ?> </li>
 	</ul>
 </div>
+<?php echo $this->element('admin_bar'); ?>

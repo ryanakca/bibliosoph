@@ -31,10 +31,6 @@
 	<ul>
 		<li><?php echo $html->link(__('Edit Author', true), array('action'=>'edit', $author['Author']['id'])); ?> </li>
 		<li><?php echo $html->link(__('Delete Author', true), array('action'=>'delete', $author['Author']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $author['Author']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Authors', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Author', true), array('action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Aliases', true), array('controller'=> 'aliases', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Alias', true), array('controller'=> 'aliases', 'action'=>'add')); ?> </li>
 	</ul>
 </div>
 <div class="related">
@@ -66,10 +62,5 @@
 	<?php endforeach; ?>
 	</table>
 <?php endif; ?>
-
-	<div class="actions">
-		<ul>
-			<li><?php echo $html->link(__('New Alias', true), array('controller'=> 'aliases', 'action'=>'add'));?> </li>
-		</ul>
-	</div>
 </div>
+<?php echo $this->element('admin_bar'); ?>

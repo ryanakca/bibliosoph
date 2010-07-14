@@ -24,7 +24,6 @@
 	<ul>
 		<li><?php echo $html->link(__('Edit Alias', true), array('action'=>'edit', $alias['Alias']['id'])); ?> </li>
 		<li><?php echo $html->link(__('Delete Alias', true), array('action'=>'delete', $alias['Alias']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $alias['Alias']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Aliases', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Alias', true), array('action'=>'add')); ?> </li>
 	</ul>
 </div>
+<?php echo $this->element('admin_bar'); ?>

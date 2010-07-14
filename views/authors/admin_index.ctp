@@ -76,18 +76,4 @@ foreach ($authors as $author):
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New Author', true), array('action'=>'add')); ?></li>
-		<li><?php echo $html->link(__('List Aliases', true), array('controller'=> 'aliases', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Alias', true), array('controller'=> 'aliases', 'action'=>'add')); ?> </li>
-                <li><?php echo $html->link(__('Papers', true),
-                    array('controller'=>'papers', 'action'=>'index')); ?></li>
-                <li><?php echo $html->link(__('Uploads', true),
-                    array('controller'=>'uploads', 'action'=>'index')); ?></li>
-                <li><?php echo $html->link(__('Users', true),
-                    array('controller'=>'users', 'action'=>'index')); ?></li>
-                <li><?php echo $html->link(__('Logout', true),
-                    array('controller'=>'users', 'action'=>'logout')); ?></li>
-	</ul>
-</div>
+<?php echo $this->element('admin_bar'); ?>

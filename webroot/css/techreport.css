@@ -350,7 +350,7 @@ p.error em {
 
 /*  Actions  */
 div.actions ul {
-	margin: 0px 0;
+	margin: 0px 5px;
 	padding: 0;
 }
 div.actions li {
@@ -367,6 +367,19 @@ div.actions ul li a {
 div.actions ul li a:hover {
 	color: #333;
 	text-decoration: underline;
+}
+
+div.actions ul li ul {
+        margin: 0px;
+        pading: 0px;
+}
+
+div.actions ul li ul li {
+        display: inline;
+        list-style-type: none;
+        line-height: 2em;
+        margin: 0 1em 0 0;
+        white-space: nowrap;
 }
 
 /* Related */
