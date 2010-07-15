@@ -1,3 +1,13 @@
+<?php
+// CSS for multiselector
+$html->css('ui.multiselect', null, null, false);
+// JS for multiselector
+
+$javascript->link(array('jquery-1.4.2.min', 'jquery-ui-1.8.custom.min', 
+    'plugins/localisation/jquery.localisation-min', 
+    'plugins/tmpl/jquery.tmpl.1.1.1', 
+    'plugins/blockUI/jquery.blockUI', 'ui.multiselect'), false);
+?>
 <div class="papers form">
 <?php echo $form->create('Paper');?>
 	<fieldset>
