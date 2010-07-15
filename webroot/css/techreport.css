@@ -522,3 +522,7 @@ pre.bibtex {
 #search form div.submit {
 	float: right;
 }
+#AliasAlias {
+        /* Keep it narrower than wide for ease of use */
+        width: 30em;
+}
