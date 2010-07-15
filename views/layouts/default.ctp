@@ -13,6 +13,7 @@
 width="102" alt="Queen's Crest" style="vertical-align: middle;" /><?php echo Configure::read('BibliosophSettings.Institution'); ?></h1>
 <p><strong>NOTE:</strong>
 Please read this <?php echo $html->link('copyright notice', array('controller' => 'pages', 'action' => 'copyright')); ?> before viewing or retrieving files.
+</p>
 <!-- Insert your header here -->
 </div>
 <div id="content">
