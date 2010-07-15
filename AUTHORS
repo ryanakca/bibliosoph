@@ -40,6 +40,23 @@ Fahrenkrug and is distributed with his permission ("Sure, just go ahead and use
 it in whatever way you want :)"). It was downloaded from
 http://bakery.cakephp.org/articles/view/creating-a-custom-shell-for-adding-users-for-use-with-authcomponent
 
-All other changes are Copyright 2009 Ryan Kavanagh and are licensed under the
-GNU Affero General Public License version 3, or (at your option) any later
+The multiselect jQuery widget is Copyright 2009–2010 Michael Aufreiter
+(quasipartikel.at) and  Yanick Rochon (yanick.rochon[at]gmail[dot]com) and is
+dually licensed under the terms of the MIT license and of the GPL version 2
+licenses. multiselect is distributed with certain libraries. These libraries
+are all dually licensed under the MIT and GPL version 2:
+ * multiselect/js/jquery-1.4.2.min.js is:
+   - Copyright (C) 2010 John Resig
+   - Copyright (C) 2010 The Dojo Foundation
+ * multiselect/css/themes/smoothness/jquery-ui-1.7.1.custom.css is:
+   - Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
+ * multiselect/js/jquery-ui-1.8.custom.min.js is:
+   - Copyright (c) 2010 AUTHORS.txt (http://jqueryui.com/about)
+ * multiselect/js/plugins/blockUI/jquery.blockUI.js is:
+   - Copyright (c) 2007-2008 M. Alsup
+ * multiselect/js/plugins/tmpl/jquery.tmpl.1.1.1.js is:
+   - Copyright (c) 2008 Andrew Hedges, andrew@hedges.name
+
+All other changes are Copyright 2009–2010 Ryan Kavanagh and are licensed under
+the GNU Affero General Public License version 3, or (at your option) any later
 version.
