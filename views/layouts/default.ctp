@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <title><?php echo $title_for_layout ?></title>
 <link rel="stylesheet" type="text/css" href="<?php echo $html->webroot ?>css/techreport.css" media="screen" />
+<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/ui.all.css" />
 <?php echo $scripts_for_layout; ?>
 </head>
 <body>
