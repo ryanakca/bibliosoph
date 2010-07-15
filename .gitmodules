@@ -1,0 +1,3 @@
+[submodule "multiselect"]
+	path = multiselect
+	url = git://github.com/michael/multiselect.git
