@@ -6,7 +6,7 @@ $html->css('ui.multiselect', null, null, false);
 $javascript->link(array('jquery-1.4.2.min', 'jquery-ui-1.8.custom.min', 
     'plugins/localisation/jquery.localisation-min', 
     'plugins/tmpl/jquery.tmpl.1.1.1', 
-    'plugins/blockUI/jquery.blockUI', 'ui.multiselect'), false);
+    'plugins/blockUI/jquery.blockUI', 'ui.multiselect', 'alias_selector'), false);
 ?>
 <div class="papers form">
 <?php echo $form->create('Paper');?>
