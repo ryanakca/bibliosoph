@@ -371,7 +371,7 @@ div.actions ul li a:hover {
 
 div.actions ul li ul {
         margin: 0px;
-        pading: 0px;
+        padding: 0px;
 }
 
 div.actions ul li ul li {
@@ -517,7 +517,7 @@ pre.bibtex {
 #search fieldset input {
 	float: left;
 }
-#search form div..reset {
+#search form div.reset {
 	float: left;
 }
 #search form div.submit {
