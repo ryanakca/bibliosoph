@@ -16,6 +16,9 @@ width="102" alt="Queen's Crest" style="vertical-align: middle;" /><?php echo Con
 <p><strong>NOTE:</strong>
 Please read this <?php echo $html->link('copyright notice', array('controller' => 'pages', 'action' => 'copyright')); ?> before viewing or retrieving files.
 </p>
+<div class="message">
+<?php echo $session->flash();?>
+</div>
 <!-- Insert your header here -->
 </div>
 <div id="content">
