@@ -3,7 +3,7 @@ class UploadsController extends AppController {
 
 	var $name = 'Uploads';
 	var $helpers = array('Html', 'Form', 'FileUpload.FileUpload');
-	var $components = array('Auth', 'FileUpload.FileUpload');
+	var $components = array('Auth');
 
 	function admin_index() {
 		$this->Upload->recursive = 0;
