@@ -3,7 +3,7 @@ class UploadsController extends AppController {
 
 	var $name = 'Uploads';
 	var $helpers = array('Html', 'Form');
-	var $components = array('FileUpload', 'Auth');
+	var $components = array('Auth', 'FileUpload.FileUpload');
 
 	function admin_index() {
 		$this->Upload->recursive = 0;
@@ -32,7 +32,7 @@ class UploadsController extends AppController {
                                 $this->Session->setFlash(__('This paper already has a PS, please delete it first.', true));
                                 $this->redirect(array('action'=>'index'));
                         } else {
-                                $this->FileUpload->fileName = $paper['Paper']['tr-id'].$this->FileUpload->_ext();
+                                $this->FileUpload->fileName = $paper['Paper']['tr-id']. '.' . $this->FileUpload->_ext();
                                 $this->FileUpload->processFile();
                                 if ($this->FileUpload->uploadedFile['type'] == 'application/pdf') {
                                     $paper['Paper']['pdf_id'] = $this->FileUpload->uploadId;

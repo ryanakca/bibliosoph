@@ -3,7 +3,7 @@ class PapersController extends AppController {
 
 	var $name = 'Papers';
 	var $helpers = array('Html', 'Form');
-        var $components = array('FileUpload', 'Auth');
+        var $components = array('Auth');
         var $paginate = array('order' => array('Paper.tr-id' => 'asc'));
 
         function beforeFilter() {
