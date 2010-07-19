@@ -4,7 +4,7 @@
  		<legend><?php __('Add Upload');?></legend>
 	<?php
                 echo $form->input('paper_id', array('label' => 'Techreport ID'));
-		echo $form->input('file', array('type' => 'file'));
+		echo $fileUpload->input();
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

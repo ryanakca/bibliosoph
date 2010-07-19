@@ -2,7 +2,7 @@
 class UploadsController extends AppController {
 
 	var $name = 'Uploads';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form', 'FileUpload.FileUpload');
 	var $components = array('Auth', 'FileUpload.FileUpload');
 
 	function admin_index() {
