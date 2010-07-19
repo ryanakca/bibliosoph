@@ -1,3 +1,6 @@
 [submodule "multiselect"]
 	path = multiselect
 	url = git://github.com/michael/multiselect.git
+[submodule "CakePHP-FileUpload-Plugin"]
+	path = CakePHP-FileUpload-Plugin
+	url = git://github.com/webtechnick/CakePHP-FileUpload-Plugin.git
