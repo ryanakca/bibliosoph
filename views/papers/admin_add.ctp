@@ -1,6 +1,6 @@
 <?php
 // CSS for multiselector
-$html->css('ui.multiselect', null, null, false);
+$html->css('ui.multiselect', null, array('inline'=>false));
 // JS for multiselector
 
 $html->script(array('jquery-1.4.2.min', 'jquery-ui-1.8.custom.min',
