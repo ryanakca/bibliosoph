@@ -94,7 +94,7 @@ class PapersController extends AppController {
 			$this->Session->setFlash(__('Invalid id for Paper', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Paper->del($id, $cascade = true)) {
+		if ($this->Paper->delete($id, $cascade = true)) {
 			$this->Session->setFlash(__('Paper deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}

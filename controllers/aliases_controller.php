@@ -72,7 +72,7 @@ class AliasesController extends AppController {
 			$this->Session->setFlash(__('Invalid id for Alias', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Alias->del($id)) {
+		if ($this->Alias->delete($id)) {
 			$this->Session->setFlash(__('Alias deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}

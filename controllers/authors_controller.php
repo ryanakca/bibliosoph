@@ -101,7 +101,7 @@ class AuthorsController extends AppController {
 			$this->Session->setFlash(__('Invalid id for Author', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Author->del($id, $cascade = true)) {
+		if ($this->Author->delete($id, $cascade = true)) {
 			$this->Session->setFlash(__('Author deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}
