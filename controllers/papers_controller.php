@@ -4,7 +4,7 @@ class PapersController extends AppController {
 	var $name = 'Papers';
 	var $helpers = array('Html', 'Form');
         var $components = array('Auth');
-        var $paginate = array('order' => array('[Paper.tr-id]' => 'asc'));
+        var $paginate = array('order' => array('`Paper`.`tr-id`' => 'asc'));
 
         function beforeFilter() {
             $this->Auth->allow('index', 'by_year', 'view');
@@ -39,7 +39,7 @@ class PapersController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
                 $this->set('paper', $this->Paper->find('first', array(
-                    'conditions' => array('[Paper.tr-id]' => $tr_id))));
+                    'conditions' => array('`Paper`.`tr-id`' => $tr_id))));
         }
 
 	function admin_index() {
