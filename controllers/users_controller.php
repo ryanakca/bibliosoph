@@ -8,6 +8,7 @@ class UsersController extends AppController {
         function beforeFilter() {
                 $this->Auth->loginRedirect = array('action'=>'index', 'controller'=>'papers', 'admin'=>true);
                 $this->Auth->logoutRedirect = array('action'=>'index', 'controller'=>'pages', 'admin'=>false);
+		parent::beforeFilter();
         }
 
         function admin_login() {
