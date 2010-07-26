@@ -12,6 +12,7 @@ class Upload extends AppModel {
                 'required' => false, 
                 'maxFileSize' => false,
                 'unique' => true,
+                'automatic' => false,
                 'fileNameFunction' => 'false'
             )
         );
