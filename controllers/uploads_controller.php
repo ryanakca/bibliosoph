@@ -3,7 +3,14 @@ class UploadsController extends AppController {
 
 	var $name = 'Uploads';
 	var $helpers = array('Html', 'Form', 'FileUpload.FileUpload');
-	var $components = array('Auth');
+	var $components = array('Auth', 'FileUpload.FileUpload');
+
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->FileUpload->automatic(false);
+		$this->FileUpload->allowedTypes(array('pdf' => array('application/pdf'),
+                                        'ps' => array('application/ps', 'application/postscript')));
+	}
 
 	function admin_index() {
 		$this->Upload->recursive = 0;
@@ -33,11 +40,11 @@ class UploadsController extends AppController {
                                 $this->redirect(array('action'=>'index'));
                         } else {
                                 $this->FileUpload->fileName = $paper['Paper']['tr-id']. '.' . $this->FileUpload->_ext();
-                                $this->FileUpload->processFile();
+                                $this->FileUpload->processAllFiles();
                                 if ($this->FileUpload->currentFile['type'] == 'application/pdf') {
-                                    $paper['Paper']['pdf_id'] = $this->FileUpload->uploadId;
+                                    $paper['Paper']['pdf_id'] = $this->FileUpload->uploadIds[0];
                                 } else {
-                                    $paper['Paper']['ps_id'] = $this->FileUpload->uploadId;
+                                    $paper['Paper']['ps_id'] = $this->FileUpload->uploadIds[0];
                                 }
                                 if ($this->FileUpload->success && $this->Upload->Paper->save($paper)) {
                                         $this->Session->setFlash(__('The file has been uploaded.', true));
@@ -84,8 +91,11 @@ class UploadsController extends AppController {
                     $paper = $this->Upload->Paper->find('first', array('Paper.ps_id' => $id));
                     unset($paper['Paper']['ps_id']);
                 }
-		if ($this->FileUpload->removeFile($file['Upload']['name'])) {
+		if ($this->FileUpload->removeFileById($id) && $this->Upload->delete($id)) {
 			$this->Session->setFlash(__('Upload deleted', true));
+			$this->redirect(array('action'=>'index'));
+		} else {
+			$this->Session->setFlash(__('An error occured while deleting the Upload', true));
 			$this->redirect(array('action'=>'index'));
 		}
 	}
