@@ -27,7 +27,7 @@ class PapersController extends AppController {
                 'conditions' => array(
                     'YEAR(Paper.published_on)' => $year,
                     'Paper.display' => '1'),
-                'order' => array('Paper.published_on' => 'asc')
+                'order' => array('`Paper`.`tr-id`' => 'asc')
                 //'contain' => array('Paper')
             );
             $this->set('papers', $this->paginate('Paper'));
