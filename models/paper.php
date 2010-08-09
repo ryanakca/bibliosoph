@@ -76,10 +76,21 @@ class Paper extends AppModel {
                 }
 	}
 
+        function reverseCompareTrID ($a, $b) {
+                return -1 * $this->compareTrId($a, $b);
+        }
+
         function fetchAndSortByTrID() {
                 $papers = $this->find('list');
                 uasort($papers, array($this, 'compareTrID'));
                 return $papers;
         }
+
+        function fetchAndSortByReverseTrID() {
+                $papers = $this->find('list');
+                uasort($papers, array($this, 'reverseCompareTrID'));
+                return $papers;
+        }
+
 }
 ?>

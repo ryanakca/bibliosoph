@@ -54,7 +54,7 @@ class UploadsController extends AppController {
                                 }
                         }
 		}
-		$papers = array_reverse($this->Upload->Paper->fetchAndSortByTrID(), true);
+		$papers = $this->Upload->Paper->fetchAndSortByReverseTrID();
 		$this->set(compact('papers'));
 	}
 
