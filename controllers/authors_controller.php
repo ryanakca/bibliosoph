@@ -69,11 +69,17 @@ class AuthorsController extends AppController {
 	function admin_add() {
 		if (!empty($this->data)) {
 			$this->Author->create();
-			if ($this->Author->save($this->data)) {
-				$this->Session->setFlash(__('The Author has been saved', true));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The Author could not be saved. Please, try again.', true));
+			$author = $this->Author->save($this->data);
+			if (!empty($author)) {
+				$alias = $this->Author->Alias->create();
+				$alias['Alias']['author_id'] = $this->Author->id;
+				$alias['Alias']['name'] = $author['Author']['first_name'] . ' ' . $author['Author']['last_name'];
+				if ($this->Author->Alias->save($alias)) {
+					$this->Session->setFlash(__('The Author and alias have been saved', true));
+					$this->redirect(array('action'=>'index'));
+				} else {
+					$this->Session->setFlash(__('The Author could not be saved. Please, try again.', true));
+				}
 			}
 		}
 	}
