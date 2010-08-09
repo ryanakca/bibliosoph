@@ -8,7 +8,7 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-        <th><?php echo $paginator->sort('Techreport ID', 'tr-id') ?></th>
+        <th><?php echo $paginator->sort('Techreport ID', '`Paper.tr-id`') ?></th>
         <th><?php echo $paginator->sort('Title', 'title') ?></th>
         <th><?php echo $paginator->sort('Published in', 'published_on') ?></th>
         <th>PDF</th>
