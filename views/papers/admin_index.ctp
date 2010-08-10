@@ -9,7 +9,7 @@ echo $paginator->counter(array(
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('tr-id');?></th>
+	<th><?php echo $paginator->sort('Techreport ID', '`tr-id`');?></th>
 	<th><?php echo $paginator->sort('title');?></th>
 	<th><?php echo $paginator->sort('published_on');?></th>
 	<th><?php echo $paginator->sort('updated');?></th>
