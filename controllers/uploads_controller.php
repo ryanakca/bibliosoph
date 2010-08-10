@@ -87,7 +87,7 @@ class UploadsController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Upload->read(null, $id);
 		}
-		$papers = $this->Upload->Paper->find('list');
+		$papers = $this->Upload->Paper->fetchAndSortByReverseTrID();
 		$this->set(compact('papers'));
 	}
 
