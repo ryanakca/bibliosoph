@@ -10,6 +10,7 @@ class UploadsController extends AppController {
 		$this->FileUpload->automatic(false);
 		$this->FileUpload->allowedTypes(array('pdf' => array('application/pdf'),
                                         'ps' => array('application/ps', 'application/postscript')));
+                $this->FileUpload->unique(false); // Allow overwriting of files with same filename
 	}
 
 	function admin_index() {
