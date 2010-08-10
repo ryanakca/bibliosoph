@@ -57,16 +57,10 @@ class UploadsController extends AppController {
                         $this->FileUpload->processAllFiles();
                         foreach ($this->FileUpload->uploadIds as $uploadId) {
                             $upload = $this->Upload->read(null, $uploadId);
-                            if ($upload['Upload']['type'] == 'application/pdf') {
-                                $paper['Paper']['pdf_id'] = $upload['Upload']['id'];
-                            } else {
-                                // We don't need to worry about another file
-                                // type getting in here because we set
-                                // allowedTypes in beforeFilter() above.
-                                $paper['Paper']['ps_id'] = $upload['Upload']['id'];
-                            }
+                            $upload['Upload']['paper_id'] = $paper['Paper']['id'];
+                            $this->Upload->save($upload);
                         }
-                        if ($this->FileUpload->success && $this->Upload->Paper->save($paper)) {
+                        if ($this->FileUpload->success) {
                                 $this->Session->setFlash(__('The file has been uploaded.', true));
                                 $this->redirect(array('action'=>'index'));
                         } else {
