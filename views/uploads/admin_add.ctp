@@ -3,7 +3,8 @@
 	<fieldset>
  		<legend><?php __('Add Upload');?></legend>
 	<?php
-                echo $form->input('paper_id', array('label' => 'Techreport ID'));
+                echo $form->input('Paper.paper_id', array('label' => 'Techreport ID'));
+		echo $fileUpload->input();
 		echo $fileUpload->input();
 	?>
 	</fieldset>

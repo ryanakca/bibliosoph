@@ -27,31 +27,50 @@ class UploadsController extends AppController {
 
 	function admin_add() {
 		if (!empty($this->data)) {
-                        $paper = $this->Upload->Paper->find('first', array('id' => $this->data['Upload']['paper_id']));
-                        /* We don't want to upload a new PDF for the paper if we already have 
-                         * one. */
-                        if (($this->FileUpload->currentFile['type'] == 'application/pdf') && isset($paper['Paper']['pdf_id'])) {
-                                $this->Session->setFlash(__('This paper already has a PDF, please delete it first.', true));
-                                $this->redirect(array('action'=>'index'));
-                        /* Same with PS */
-                        } elseif ((in_array($this->FileUpload->currentFile['type'], 
-                                    array('application/postscript', 'application/ps')) && isset($paper['Paper']['ps_id']))) {
-                                $this->Session->setFlash(__('This paper already has a PS, please delete it first.', true));
+                        $paper = $this->Upload->Paper->read(null, $this->data['Paper']['paper_id']);
+                        // Modify file object in place.
+                        foreach ($this->FileUpload->uploadedFiles as &$file) {
+                            /* We don't want to upload a new PDF for the paper
+                             * if we already have one. If we don't have a PDF
+                             * for the paper, set its filename to tr-id.pdf  */
+                            if (($file['file']['type'] == 'application/pdf')) {
+                                if (isset($paper['Paper']['pdf_id'])) {
+                                    $this->Session->setFlash(__('This paper already has a PDF, please delete it first.', true));
+                                    $this->redirect(array('action'=>'index'));
+                                } else {
+                                    $file['file']['name'] = $paper['Paper']['tr-id'] . '.pdf';
+                                }
+                            /* Same with PS */
+                            } elseif (in_array($file['file']['type'], array('application/postscript', 'application/ps'))) {
+                                if (isset($paper['Paper']['ps_id'])) {
+                                    $this->Session->setFlash(__('This paper already has a PS, please delete it first.', true));
+                                    $this->redirect(array('action'=>'index'));
+                                } else {
+                                    $file['file']['name'] = $paper['Paper']['tr-id'] . '.ps';
+                                }
+                            }
+                        }
+                        unset($file); // We need to unset file because we were modifying it in place.
+                        /* It would be nice to be able to set the uploadId in
+                            * the above loop, but this can't be done until
+                            * processAllFiles(); is called. */
+                        $this->FileUpload->processAllFiles();
+                        foreach ($this->FileUpload->uploadIds as $uploadId) {
+                            $upload = $this->Upload->read(null, $uploadId);
+                            if ($upload['Upload']['type'] == 'application/pdf') {
+                                $paper['Paper']['pdf_id'] = $upload['Upload']['id'];
+                            } else {
+                                // We don't need to worry about another file
+                                // type getting in here because we set
+                                // allowedTypes in beforeFilter() above.
+                                $paper['Paper']['ps_id'] = $upload['Upload']['id'];
+                            }
+                        }
+                        if ($this->FileUpload->success && $this->Upload->Paper->save($paper)) {
+                                $this->Session->setFlash(__('The file has been uploaded.', true));
                                 $this->redirect(array('action'=>'index'));
                         } else {
-                                $this->FileUpload->fileName = $paper['Paper']['tr-id']. '.' . $this->FileUpload->_ext();
-                                $this->FileUpload->processAllFiles();
-                                if ($this->FileUpload->currentFile['type'] == 'application/pdf') {
-                                    $paper['Paper']['pdf_id'] = $this->FileUpload->uploadIds[0];
-                                } else {
-                                    $paper['Paper']['ps_id'] = $this->FileUpload->uploadIds[0];
-                                }
-                                if ($this->FileUpload->success && $this->Upload->Paper->save($paper)) {
-                                        $this->Session->setFlash(__('The file has been uploaded.', true));
-                                        $this->redirect(array('action'=>'index'));
-                                } else {
-                                        $this->Session->setFlash($this->FileUpload->showErrors());
-                                }
+                                $this->Session->setFlash($this->FileUpload->showErrors());
                         }
 		}
 		$papers = $this->Upload->Paper->fetchAndSortByReverseTrID();
