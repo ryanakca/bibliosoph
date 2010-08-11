@@ -34,7 +34,7 @@
         ?></p>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
-		<th><?php echo $paginator->sort('Techreport ID', 'Paper.tr-id'); ?></th>
+		<th><?php echo $paginator->sort('Techreport ID', '`Paper.tr-id`'); ?></th>
                 <th><?php echo $paginator->sort('Title', 'Paper.title') ?></th>
                 <th><?php echo $paginator->sort('Published in', 'Paper.published_on') ?></th>
                 <th>PDF</th>
